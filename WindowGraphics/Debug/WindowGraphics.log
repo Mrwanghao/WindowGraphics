@@ -1,0 +1,7 @@
+﻿  main.cpp
+c:\users\wanghao\source\repos\windowgraphics\windowgraphics\mathutil.h(5): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\source\repos\windowgraphics\windowgraphics\main.cpp(191): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\source\repos\windowgraphics\windowgraphics\main.cpp(192): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\source\repos\windowgraphics\windowgraphics\main.cpp(193): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\source\repos\windowgraphics\windowgraphics\main.cpp(195): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+  WindowGraphics.vcxproj -> C:\Users\wanghao\source\repos\WindowGraphics\Debug\WindowGraphics.exe
