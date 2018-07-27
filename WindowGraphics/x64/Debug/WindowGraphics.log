@@ -1,0 +1,119 @@
+﻿  Vertex.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+  Vector.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.cpp(212): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  Triangle.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.h(6): warning C4099: “Vertex”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(6): note: 参见“Vertex”的声明
+  Sampler.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\sampler.cpp(59): warning C4018: “>=”: 有符号/无符号不匹配
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\sampler.cpp(74): warning C4018: “>=”: 有符号/无符号不匹配
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\sampler.cpp(83): warning C4018: “>=”: 有符号/无符号不匹配
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\sampler.cpp(92): warning C4018: “>=”: 有符号/无符号不匹配
+  Matrix.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(146): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(147): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(169): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(170): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(192): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\matrix.cpp(193): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  MathUtil.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(20): warning C4099: “VertexOut”: 类型名称以前使用“class”现在使用的是“struct”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(19): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.cpp(127): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  main.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.h(6): warning C4099: “Vertex”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(6): note: 参见“Vertex”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(6): warning C4099: “VertexOut”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(20): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphics.h(5): warning C4099: “VertexOut”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(6): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphics.h(6): warning C4099: “Vertex”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.h(6): note: 参见“Vertex”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\main.cpp(130): warning C4244: “return”: 从“WPARAM”转换到“int”，可能丢失数据
+  GraphicsMod.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(6): warning C4099: “Vertex”: 类型名称以前使用“class”现在使用的是“struct”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(5): note: 参见“Vertex”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(20): warning C4099: “VertexOut”: 类型名称以前使用“class”现在使用的是“struct”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(19): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(15): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(177): warning C4554: “&”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(187): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(192): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(197): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(202): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(207): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(211): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(217): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(221): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(227): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(231): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(237): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(241): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(252): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(257): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(262): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(267): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(272): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(276): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(282): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(286): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(292): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(296): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(302): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(306): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(327): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(364): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(477): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(572): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(583): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(584): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(602): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(603): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(660): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(692): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(695): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(723): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(724): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(780): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1046): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1068): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1069): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1128): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1313): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1337): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1349): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1457): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1481): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.cpp(1497): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  graphics.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(6): warning C4099: “Vertex”: 类型名称以前使用“class”现在使用的是“struct”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(5): note: 参见“Vertex”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(20): warning C4099: “VertexOut”: 类型名称以前使用“class”现在使用的是“struct”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(19): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(6): warning C4099: “VertexOut”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(20): note: 参见“VertexOut”的声明
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\graphicsmod.h(6): warning C4099: “Vertex”: 类型名称以前使用“struct”现在使用的是“class”
+  c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vertex.h(6): note: 参见“Vertex”的声明
+  Camera.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\mathutil.h(8): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\camera.cpp(27): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+  BMPTexture.cpp
+c:\users\wanghao\desktop\github\windowgraphics\windowgraphics\vector.h(40): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+  BMPFile.cpp
+  正在生成代码...
+main.obj : error LNK2001: 无法解析的外部符号 IID_IDirectDraw7
+C:\Users\wanghao\Desktop\Github\WindowGraphics\x64\Debug\WindowGraphics.exe : fatal error LNK1120: 1 个无法解析的外部命令
