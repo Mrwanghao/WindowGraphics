@@ -5,6 +5,10 @@ public:
 	Application();
 	~Application();
 
+
+
+	void test();
+
 	void update();
 };
 
