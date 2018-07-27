@@ -6,9 +6,6 @@ public:
 	~Application();
 
 
-
-	void test();
-
 	void update();
 };
 
