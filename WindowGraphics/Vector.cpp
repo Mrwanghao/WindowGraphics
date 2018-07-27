@@ -5,56 +5,56 @@ namespace Math
 {
 	Vec2::Vec2()
 	{
-		this->_x = 0.0f;
-		this->_y = 0.0f;
+		this->x = 0.0f;
+		this->y = 0.0f;
 	}
 
 	Vec2::Vec2(float _x, float _y)
 	{
-		this->_x = _x;
-		this->_y = _y;
+		this->x = _x;
+		this->y = _y;
 	}
 
 	Vec2::Vec2(const Vec2 & right)
 	{
-		this->_x = right._x;
-		this->_y = right._y;
+		this->x = right.x;
+		this->y = right.y;
 	}
 
 	void Vec2::Set(float _x, float _y)
 	{
-		this->_x = _x;
-		this->_y = _y;
+		this->x = _x;
+		this->y = _y;
 	}
 
 	void Vec2::SetX(float _x)
 	{
-		this->_x = _x;
+		this->x = _x;
 	}
 
 	void Vec2::SetY(float _y)
 	{
-		this->_y = _y;
+		this->y = _y;
 	}
 
 	float Vec2::GetX()
 	{
-		return this->_x;
+		return this->x;
 	}
 
 	float Vec2::GetY()
 	{
-		return this->_y;
+		return this->y;
 	}
 
 	void Vec2::LoadZero()
 	{
-		this->_x = this->_y = 0.0f;
+		this->x = this->y = 0.0f;
 	}
 
 	void Vec2::LoadOne()
 	{
-		this->_x = this->_y = 1.0f;
+		this->x = this->y = 1.0f;
 	}
 
 	void Vec2::Normalize()
@@ -62,8 +62,8 @@ namespace Math
 		float length = GetLength();
 		if (length > 0)
 		{
-			this->_x /= length;
-			this->_y /= length;
+			this->x /= length;
+			this->y /= length;
 		}
 	}
 
@@ -76,31 +76,31 @@ namespace Math
 
 	float Vec2::Dot(const Vec2 & right)
 	{
-		return this->_x * right._x + this->_y * right._y;
+		return this->x * right.x + this->y * right.y;
 	}
 
 	
 
 	Vec2 Vec2::operator*(float scale) const
 	{
-		return Vec2(this->_x * scale, this->_y * scale);
+		return Vec2(this->x * scale, this->y * scale);
 	}
 
 	Vec2 Vec2::operator/(float scale) const
 	{
 		if (scale == 0)
 			return *this;
-		return Vec2(this->_x / scale, this->_y / scale);
+		return Vec2(this->x / scale, this->y / scale);
 	}
 
 	Vec2 Vec2::operator+(float scale) const
 	{
-		return Vec2(this->_x + scale, this->_y + scale);
+		return Vec2(this->x + scale, this->y + scale);
 	}
 
 	Vec2 Vec2::operator-(float scale) const
 	{
-		return Vec2(this->_x - scale, this->_y - scale);
+		return Vec2(this->x - scale, this->y - scale);
 	}
 
 	Vec2 operator*(float scale, const Vec2 & right)
@@ -125,17 +125,23 @@ namespace Math
 
 	Vec2 Vec2::operator+(const Vec2 & right) const
 	{
-		return Vec2(this->_x + right._x, this->_y + right._y);
+		return Vec2(this->x + right.x, this->y + right.y);
 	}
 
 	Vec2 Vec2::operator-(const Vec2 & right) const
 	{
-		return Vec2(this->_x - right._x, this->_y - right._y);
+		return Vec2(this->x - right.x, this->y - right.y);
 	}
 
 	Vec2 Vec2::operator*(const Vec2 & right) const
 	{
-		return Vec2(this->_x * right._x, this->_y * right._y);
+		return Vec2(this->x * right.x, this->y * right.y);
+	}
+
+	void Vec2::operator+=(const Vec2 & right)
+	{
+		x += right.x;
+		y += right.y;
 	}
 
 	
@@ -157,6 +163,13 @@ namespace Math
 		return result;
 	}
 
+	Vec2 & Vec2::operator=(const Vec2 & right)
+	{
+		x = right.x;
+		y = right.y;
+		return *this;
+	}
+
 	
 
 	
@@ -164,21 +177,45 @@ namespace Math
 
 	Vec3::Vec3()
 	{
-		this->_x = this->_y = this->_z = 0.0f;
+		this->x = this->y = this->z = 0.0f;
 	}
 
 	Vec3::Vec3(float _x, float _y, float _z)
 	{
-		this->_x = _x;
-		this->_y = _y;
-		this->_z = _z;
+		this->x = _x;
+		this->y = _y;
+		this->z = _z;
 	}
 
 	void Vec3::Set(float _x, float _y, float _z)
 	{
-		this->_x = _x;
-		this->_y = _y;
-		this->_z = _z;
+		this->x = _x;
+		this->y = _y;
+		this->z = _z;
+	}
+
+	void Vec3::Normalize()
+	{
+		float length = GetLength();
+		if (length <= 0)
+		{
+			return;
+		}
+
+		this->x /= length;
+		this->y /= length;
+		this->z /= length;
+	}
+
+	float Vec3::GetLength() const
+	{
+		float length = sqrt(x*x + y*y + z*z);
+		return length;
+	}
+
+	float Vec3::Dot(const Vec3 & right) const
+	{
+		return x * right.x + y * right.y + z * right.z;
 	}
 
 	void Vec3::operator*=(const Matrix3 & right)
@@ -195,6 +232,51 @@ namespace Math
 		}
 	}
 
+	Vec4 Vec3::operator*(const Matrix4 & right) const
+	{
+		Vec4 result(this->x, this->y, this->z, 1.0f);
+		result *= right;
+		return result;
+	}
+
+	Vec3 Vec3::operator-(const Vec3 & right) const
+	{
+		return Vec3(x - right.x, y - right.y, z - right.z);
+	}
+
+	Vec3 Vec3::operator*(float scale) const
+	{
+		return Vec3(x * scale, y * scale, z * scale);
+	}
+
+	Vec3 Vec3::operator+(const Vec3 & right) const
+	{
+		return Vec3(x + right.x, y + right.y, z + right.z);
+	}
+
+	void Vec3::operator+=(const Vec3 & right)
+	{
+		this->x += right.x;
+		this->y += right.y;
+		this->z += right.z;
+	}
+
+	void Vec3::operator-=(const Vec3 & right)
+	{
+		this->x -= right.x;
+		this->y -= right.y;
+		this->z -= right.z;
+	}
+
+	Vec3 Vec3::operator-()
+	{
+		Vec3 tmp;
+		tmp.x = -x;
+		tmp.y = -y;
+		tmp.z = -z;
+		return tmp;
+	}
+
 	Vec4::Vec4()
 	{
 		for(int index = 0; index < 4; index++)
@@ -203,10 +285,10 @@ namespace Math
 
 	Vec4::Vec4(float _x, float _y, float _z, float _w)
 	{
-		this->_x = _x;
-		this->_y = _y;
-		this->_z = _z;
-		this->_w = _w;
+		this->x = _x;
+		this->y = _y;
+		this->z = _z;
+		this->w = _w;
 	}
 
 	Vec4 Vec4::operator*(const Matrix4 & right)
@@ -224,6 +306,33 @@ namespace Math
 		}
 		return result;
 	}
+
+	void Vec4::operator*=(const Matrix4 & right)
+	{
+		*this = *this * right;
+	}
+
+	Vec4 Vec4::operator*(const Vec4 & right)
+	{
+		return Vec4(x * right.x, y * right.y, z * right.z, w * right.w);
+	}
+
+	Vec4 Vec4::operator*(float scale)
+	{
+		return Vec4(x * scale, y * scale, z * scale, w * scale);
+	}
+
+	Vec4 Vec4::operator+(const Vec4 & right)
+	{
+		return Vec4(x + right.x, y + right.y, z + right.z, w + right.w);
+	}
+
+	Vec4 Vec4::operator-(const Vec4 & right)
+	{
+		return Vec4(x - right.x, y - right.y, z - right.z, w);
+	}
+
+	
 
 	
 

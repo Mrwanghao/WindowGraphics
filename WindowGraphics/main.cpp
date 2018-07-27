@@ -1,19 +1,20 @@
 #include <Windows.h>
 #include <windowsx.h>
 #include <iostream>
-#include "Camera.h"
-
 #include <ddraw.h>
 
+#include "Vertex.h"
+#include "Camera.h"
 #include "Vector.h"
 #include "GraphicsMod.h"
 #include "MathUtil.h"
+#include "Sampler.h"
+#include "graphics.h"
+#include "Triangle.h"
 
 using namespace Math;
 
-
-
-HWND main_window_hwnd = nullptr;
+HWND main_window_hwnd		   = nullptr;
 HINSTANCE main_window_instance = nullptr;
 
 LPDIRECTDRAW7 lpdd = NULL;
@@ -21,12 +22,20 @@ DDSURFACEDESC2 ddsd;
 LPDIRECTDRAWSURFACE7 lpddsprimary = NULL;
 LPDIRECTDRAWSURFACE7 lpddsback = NULL;
 
+extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
+
 //Math::Vec4 temp1(-20.0f, 0.0f, 0.0f, 1.0f), temp2(50.0f, 50.0f, 0.0f, 1.0f), temp3(10.0f, 0.0f, 0.0f, 1.0f);
-Math::Vec4 temp1(-20.0f, 0.0f, 10.0f, 1.0f), temp2(50.0f, 50.0f, 20.0f, 1.0f), temp3(10.0f, 0.0f, 0.0f, 1.0f);
+Math::Vec4 temp1(-20.0f, 0.0f, 10.0f, 1.0f), temp2(50.0f, 50.0f, 20.0f, 1.0f), temp3(10.0f, 10.0f, 0.0f, 1.0f);
 
-Camera mainCamera(Math::Vec4(0.0f, 90.0f, 0.0f, 1.0f), Math::Vec4(0.0f, 0.0f, -100.0f, 1.0f), 50.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+Vertex b = Vertex(Vec4(-2.0f,  1.0f,  3.0f , 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
+Vertex a = Vertex(Vec4(2.0f ,  1.0f,  0.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
+Vertex c = Vertex(Vec4(-2.0f, -1.0f, -3.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
+Triangle tri(a, b, c);
 
-Math::Vec3 localTOWorldRotation(0.0f, 0.0f, 0.0f);
+Camera mainCamera(Math::Vec3(0.0f, 0.0f, 0.0f), Math::Vec3(0.0f, 0.0f, -5.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+Math::Vec3 localPosition(0.0f, 0.0f, 0.0f);
+Math::Vec3 localEular(0.0f, 0.0f, 0.0f);
 
 int GameInit();
 int GameMain();
@@ -75,7 +84,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine,
 	wcex.hInstance = hInstance;
 	wcex.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = WINDOW_CLASS_NAME;
 	wcex.hIconSm = wcex.hIcon;
@@ -121,13 +130,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, LPSTR lpCmdLine,
 	return msg.wParam;
 }
 
-
-	
 int GameInit()
 {
-
-	
-
 	if (FAILED(DirectDrawCreateEx(NULL, (void **)&lpdd, IID_IDirectDraw7, NULL)))
 		return -1;
 
@@ -150,10 +154,9 @@ int GameInit()
 	if (FAILED(lpddsprimary->GetAttachedSurface(&ddsd.ddsCaps, &lpddsback)))
 		return -1;
 	
-
-	mainCamera.calWorldToCameraMatrix();
 	return 0;
 }
+
 
 
 int GameMain()
@@ -161,54 +164,90 @@ int GameMain()
 	if (KEYDOWN(VK_ESCAPE))
 		SendMessage(main_window_hwnd, WM_CLOSE, 0, 0);
 
-	//mainCamera.cameraDirection._y += 10.0f;
+	if (KEYDOWN(VK_F2))
+		mainCamera.nearZ += 0.1f;
 
-	Math::Vec4 temp_01 = temp1, temp_02 = temp2, temp_03 = temp3;
+	if (KEYDOWN(VK_F1))
+		mainCamera.nearZ += -0.1f;
+	
+	if (KEYDOWN(VK_LEFT))
+		mainCamera.cameraDirection.y += 1.0f;
 
-	Math::Matrix4 localToWorldMatrix = eularToMatrix(localTOWorldRotation);
-	localTOWorldRotation._y += 10.0f;
+	if (KEYDOWN(VK_RIGHT))
+		mainCamera.cameraDirection.y += -1.0f;
 
-	temp_01 = temp_01 * localToWorldMatrix;
-	temp_01 = temp_01 * mainCamera.worldToCameraMatrix;
-	mainCamera.cameraToPerspective(&temp_01);
-	mainCamera.perspectiveToScreen(&temp_01);
+	if (KEYDOWN(VK_UP))
+		mainCamera.worldPosition += Vec3(0.0f, 0.0f, 0.1f);
+		
+	if (KEYDOWN(VK_DOWN))
+		mainCamera.worldPosition += Vec3(0.0f, 0.0f, -0.1f);
+	
+	//localEular.y += 1.0f;
+	//localEular.z += 1.0f;
+	
 
-	temp_02 = temp_02 * localToWorldMatrix;
-	temp_02 = temp_02 * mainCamera.worldToCameraMatrix;
-	mainCamera.cameraToPerspective(&temp_02);
-	mainCamera.perspectiveToScreen(&temp_02);
+	modelMatrix = GetModelMatrix(localPosition, localEular);
+	mainCamera.CalWorldToCameraMatrix();
+	//viewMatrix = GetViewMatrix(mainCamera.worldPosition, mainCamera.cameraDirection);
+	projectMatrix = GetPerspectiveMatrix(90.0f, (float)((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT), mainCamera.nearZ, 500.0f);
+	//
+	//mainCamera.calWorldToCameraMatrix();
+	//Math::Vec4 temp_01 = temp1, temp_02 = temp2, temp_03 = temp3;
+	//
+	//Math::Matrix4 localToWorldMatrix = eularToMatrix(localTOWorldRotation);
+	////localTOWorldRotation.x += 1.0f;
+	////localTOWorldRotation.y += 1.0f;
+	////localTOWorldRotation.z += 1.0f;
+	//
+	//temp_01 = temp_01 * localToWorldMatrix;
+	//temp_01 = temp_01 * mainCamera.worldToCameraMatrix;
+	//mainCamera.cameraToPerspective(&temp_01);
+	//mainCamera.perspectiveToScreen(&temp_01);
+	//
+	//temp_02 = temp_02 * localToWorldMatrix;
+	//temp_02 = temp_02 * mainCamera.worldToCameraMatrix;
+	//mainCamera.cameraToPerspective(&temp_02);
+	//mainCamera.perspectiveToScreen(&temp_02);
+	//
+	//temp_03 = temp_03 * localToWorldMatrix;
+	//temp_03 = temp_03 * mainCamera.worldToCameraMatrix;
+	//mainCamera.cameraToPerspective(&temp_03);
+	//mainCamera.perspectiveToScreen(&temp_03);
 
-	temp_03 = temp_03 * localToWorldMatrix;
-	temp_03 = temp_03 * mainCamera.worldToCameraMatrix;
-	mainCamera.cameraToPerspective(&temp_03);
-	mainCamera.perspectiveToScreen(&temp_03);
 
 	if (FAILED(lpddsback->Lock(NULL, &ddsd,
 		DDLOCK_WAIT | DDLOCK_SURFACEMEMORYPTR,
 		NULL)))
 		return(0);
 
-	DrawLine(temp_01._x, temp_01._y, temp_02._x, temp_02._y, 0, 255, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
-	DrawLine(temp_01._x, temp_01._y, temp_03._x, temp_03._y, 255, 0, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
-	DrawLine(temp_02._x, temp_02._y, temp_03._x, temp_03._y, 0, 0, 255, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
-
-	DrawLine(50.0f, 10.0f, 150.0f, 250.0f, 0, 255, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	DrawLineTriangle(tri, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 	
-	/*DrawLine(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT,
-		rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT,
-		rand() % 256, rand() % 256, rand() % 256,
-		(UINT *)ddsd.lpSurface, ddsd.lPitch >> 2);*/
+	//DrawClipLine(temp_01.x, temp_01.y, temp_02.x, temp_02.y, 0, rand() % 256, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	//DrawClipLine(temp_01.x, temp_01.y, temp_03.x, temp_03.y, rand() % 256, 0, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	//DrawClipLine(temp_02.x, temp_02.y, temp_03.x, temp_03.y, 0, 0, rand() % 256, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	DrawClipLine(0, 0, 320, 240, 0, rand() % 256, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 
-	// unlock primary buffer
+	//DrawTriangle((int)temp_01.x, (int)temp_01.y, (int)temp_02.x, (int)temp_02.y, (int)temp_03.x, (int)temp_03.y, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2, 0, rand() % 256, 0);
+	//DrawGouraudTriangle((int)temp_01.x, (int)temp_01.y, (int)temp_02.x, (int)temp_02.y, (int)temp_03.x, (int)temp_03.y, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	// ²âÊÔÏß
+
+	//DrawTextureTriangle((int)temp_01.x, (int)temp_01.y, (int)temp_02.x, (int)temp_02.y, (int)temp_03.x, (int)temp_03.y, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	
+
+
 	if (FAILED(lpddsback->Unlock(NULL)))
 		return(0);
 
 	while (FAILED(lpddsprimary->Flip(NULL, DDFLIP_WAIT)));
 
-	Sleep(3000);
+	//Sleep(33);
 
+	DrawFillColor(lpddsback);
+	
 	return 0;
 }
+
+
 
 int GameClose()
 {

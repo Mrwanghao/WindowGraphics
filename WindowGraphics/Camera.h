@@ -1,43 +1,31 @@
 #pragma once
-#include "Triangle.h"
 #include "Vector.h"
 #include "Matrix.h"
-#include "Plane.h"
-
 
 class Camera
 {
 public:
-	Camera(Math::Vec4 cameraDirection, Math::Vec4 worldPosition, float nearZ, float farZ, float fov, float viewportWidth, float viewportHeight);
+	Camera();
+	Camera(Math::Vec3 cameraDirection, Math::Vec3 worldPosition, float nearZ, float farZ, float fovx, float viewportWidth, float viewportHeight);
+	~Camera();
 
 public:
-	void CullObject();
-	void CullBack(Triangle& triangle);
+	void CalWorldToCameraMatrix();
 
-	void cameraToPerspective(Math::Vec4* position);
-	void perspectiveToScreen(Math::Vec4* position);
-
-	void calWorldToCameraMatrix();
-
-	Math::Vec4 cameraDirection;
-private:
-	Math::Vec4 worldPosition;
-
-	Plane leftClipPlane;
-	Plane rightClipPlane;
-	Plane topClipPlane;
-	Plane bottomClipPlane;
+public:
+	Math::Vec3 cameraDirection;
+	Math::Vec3 worldPosition;
 
 	float nearZ;
+private:
 	float farZ;
 
 	//½Ç¶È
-	float fov;
+	float fovx;
 
 	float viewportWidth;
 	float viewportHeight;
-	float viewportCenterX;
-	float viewportCenterY;
+
 	float viewplaneWidth;
 	float viewplaneHeight;
 
@@ -45,10 +33,5 @@ private:
 
 	//ÆÁÄ»¿í¸ß±È
 	float aspectRatio;
-
-public:
-	Math::Matrix4 worldToCameraMatrix;
-	Math::Matrix4 cameraToPerspectiveMatrix;
-	Math::Matrix4 perspectiveToScreenMatrix;
 
 };

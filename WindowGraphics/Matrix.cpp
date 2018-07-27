@@ -121,7 +121,7 @@ namespace Math
 		}
 	}
 
-	void Matrix4::LoadTranslate(const Math::Vec4 & translatePosition)
+	void Matrix4::LoadTranslate(const Math::Vec3& translatePosition)
 	{
 		this->_m00 = 1.0f;
 		this->_m01 = 0.0f;
@@ -135,17 +135,16 @@ namespace Math
 		this->_m21 = 0.0f;
 		this->_m22 = 1.0f;
 		this->_m23 = 0.0f;
-		this->_m30 = -translatePosition._x;
-		this->_m31 = -translatePosition._y;
-		this->_m32 = -translatePosition._z;
+		this->_m30 = translatePosition.x;
+		this->_m31 = translatePosition.y;
+		this->_m32 = translatePosition.z;
 		this->_m33 = 1.0f;
-
 	}
 
 	void Matrix4::LoadRotX(float theta)
 	{
-		float cosValue =  cos(DegToRad(theta));
-		float sinValue = -sin(DegToRad(theta));
+		float cosValue = cos(DegToRad(theta));
+		float sinValue = sin(DegToRad(theta));
 
 		this->_m00 = 1.0f;
 		this->_m01 = 0.0f;
@@ -167,18 +166,18 @@ namespace Math
 
 	void Matrix4::LoadRotY(float theta)
 	{
-		float cosValue =  cos(DegToRad(theta));
-		float sinValue = -sin(DegToRad(theta));
+		float cosValue = cos(DegToRad(theta));
+		float sinValue = sin(DegToRad(theta));
 
 		this->_m00 = cosValue;
 		this->_m01 = 0.0f;
-		this->_m02 = -sinValue;
+		this->_m02 = sinValue;
 		this->_m03 = 0.0f;
 		this->_m10 = 0.0f;
 		this->_m11 = 1.0f;
 		this->_m12 = 0.0f;
 		this->_m13 = 0.0f;
-		this->_m20 = sinValue;
+		this->_m20 = -sinValue;
 		this->_m21 = 0.0f;
 		this->_m22 = cosValue;
 		this->_m23 = 0.0f;
@@ -190,8 +189,8 @@ namespace Math
 
 	void Matrix4::LoadRotZ(float theta)
 	{
-		float cosValue =  cos(DegToRad(theta));
-		float sinValue = -sin(DegToRad(theta));
+		float cosValue = cos(DegToRad(theta));
+		float sinValue = sin(DegToRad(theta));
 
 		this->_m00 = cosValue;
 		this->_m01 = sinValue;
@@ -228,7 +227,6 @@ namespace Math
 				temp = 0.0f;
 			}
 		}
-
 		return result;
 	}
 
@@ -237,11 +235,4 @@ namespace Math
 		*this = *this * right;
 	}
 
-	void Matrix4::operator=(const Matrix4 & right)
-	{
-		for (int index = 0; index < 16; index++)
-			this->_data[index] = right._data[index];
-	}
-
-	
 }

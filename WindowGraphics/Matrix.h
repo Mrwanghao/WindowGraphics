@@ -3,6 +3,7 @@
 namespace Math
 {
 	class Vec4;
+	class Vec3;
 
 	class Matrix2
 	{
@@ -70,15 +71,20 @@ namespace Math
 
 	public:
 		void Identity();
-		void LoadTranslate(const Math::Vec4& translatePosition);
+		void LoadTranslate(const Math::Vec3& translatePosition);
 		void LoadRotX(float theta);
 		void LoadRotY(float theta);
 		void LoadRotZ(float theta);
+		inline void LoadZero() 
+		{ 
+			for (int i = 0; i < 16; i++)
+				_data[i] = 0.0f;
+		}
 
 	public:
 		Matrix4 operator*(const Matrix4& right) const;
 		void operator*=(const Matrix4& right);
-		void operator=(const Matrix4& right);
+
 	};
 
 }
