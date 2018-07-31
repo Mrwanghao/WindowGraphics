@@ -104,6 +104,7 @@ namespace Math
 		void operator-=(const Vec3& right);
 
 		Vec3 operator-();
+		//Vec3& operator=(const Vec3& right);
 	};
 
 	class Vec4
@@ -131,6 +132,7 @@ namespace Math
 		Vec4 operator*(float scale);
 		Vec4 operator+(const Vec4& right);
 		Vec4 operator-(const Vec4& right);
+		//Vec4& operator=(const Vec4& right);
 
 	public:
 		

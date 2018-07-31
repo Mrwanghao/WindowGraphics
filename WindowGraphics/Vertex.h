@@ -4,12 +4,12 @@
 
 struct Vertex
 {
-	Math::Vec4 localPosition;
+	Math::Vec3 localPosition;
 	Math::Vec3 localNormal;
 	Math::Vec2 uv;
 
 	Vertex();
-	Vertex(Math::Vec4 _localPosition, Math::Vec3 _localNormal, Math::Vec2 _uv);
+	Vertex(Math::Vec3 _localPosition, Math::Vec3 _localNormal, Math::Vec2 _uv);
 	~Vertex();
 };
 
@@ -27,7 +27,7 @@ struct VertexOut
 	VertexOut();
 	VertexOut(Math::Vec4 _clipPosition, Math::Vec4 _viewPosition, Math::Vec4 _worldPosition, Math::Vec3 _worldNormal, Math::Vec2 _uv);
 
-	VertexOut operator=(const VertexOut& right);
+	VertexOut& operator=(const VertexOut& right);
 	VertexOut operator-(const VertexOut& right);
 };
 

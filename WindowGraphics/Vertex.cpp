@@ -6,7 +6,7 @@ Vertex::Vertex()
 {
 }
 
-Vertex::Vertex(Math::Vec4 _localPosition, Math::Vec3 _localNormal, Math::Vec2 _uv)
+Vertex::Vertex(Math::Vec3 _localPosition, Math::Vec3 _localNormal, Math::Vec2 _uv)
 {
 	localPosition = _localPosition;
 	localNormal = _localNormal;
@@ -20,9 +20,8 @@ Vertex::~Vertex()
 void VertexCopy(Vertex * src, Vertex * dest)
 {
 	dest->localPosition = src->localPosition;
-	dest->uv = src->uv;
 	dest->localNormal = src->localNormal;
-
+	dest->uv = src->uv;
 }
 
 #pragma endregion
@@ -37,14 +36,14 @@ VertexOut::VertexOut()
 
 VertexOut::VertexOut(Math::Vec4 _clipPosition, Math::Vec4 _viewPosition, Math::Vec4 _worldPosition, Math::Vec3 _worldNormal, Math::Vec2 _uv)
 {
-	clipPosition = _clipPosition;
-	viewPosition = _viewPosition;
 	worldPosition = _worldPosition;
+	viewPosition = _viewPosition;
+	clipPosition = _clipPosition;
 	worldNormal = _worldNormal;
 	uv = _uv;
 }
 
-VertexOut VertexOut::operator=(const VertexOut & right)
+VertexOut& VertexOut::operator=(const VertexOut & right)
 {
 	clipPosition = right.clipPosition;
 	viewPosition = right.viewPosition;
@@ -67,9 +66,9 @@ VertexOut VertexOut::operator-(const VertexOut & right)
 
 void VertexOutCopy(VertexOut * src, VertexOut * dest)
 {
-	dest->clipPosition = src->clipPosition;
-	dest->viewPosition = src->viewPosition;
 	dest->worldPosition = src->worldPosition;
+	dest->viewPosition = src->viewPosition;
+	dest->clipPosition = src->clipPosition;
 	dest->worldNormal = src->worldNormal;
 	dest->uv = src->uv;
 }

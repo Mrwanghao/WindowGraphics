@@ -15,19 +15,19 @@ Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 extern Camera mainCamera;
 
-void DrawLineTriangle(Triangle& tri, unsigned int* videoBuffer, int lPitch)
+void DrawLineTriangle(Triangle& _tri, unsigned int* videoBuffer, int lPitch)
 {
 	//现在计算出了所有顶点的vertexout
-	VertShader(tri.vertexA, tri.vertexoutA);
-	VertShader(tri.vertexB, tri.vertexoutB);
-	VertShader(tri.vertexC, tri.vertexoutC);
+	VertShader(_tri.vertexA, _tri.vertexoutA);
+	VertShader(_tri.vertexB, _tri.vertexoutB);
+	VertShader(_tri.vertexC, _tri.vertexoutC);
 
 	//首先进行正反面判断
 	//目前不需要
 
 	//那么现在可以进行裁剪
 	//首先进行标志为检测
-	int clipFlag = CheckTriangle(tri);
+	int clipFlag = CheckTriangle(_tri);
 
 	if (clipFlag != 111)
 	{
@@ -39,7 +39,7 @@ void DrawLineTriangle(Triangle& tri, unsigned int* videoBuffer, int lPitch)
 		}
 
 		//分解或者修改
-		FixTriangle(tri, clipFlag);
+		FixTriangle(_tri, clipFlag);
 		
 		//渲染第一个三角形
 		tri1.CalculateNDCVertex();
@@ -72,10 +72,10 @@ void DrawLineTriangle(Triangle& tri, unsigned int* videoBuffer, int lPitch)
 	else if (clipFlag == 111)
 	{
 		//不需切割
-		tri.CalculateNDCVertex();
+		_tri.CalculateNDCVertex();
 
 		//DrawGouraudTriangle(tri.ndcA.x, tri.ndcA.y, tri.ndcB.x, tri.ndcB.y, tri.ndcC.x, tri.ndcC.y, videoBuffer, lPitch);
-		DrawTextureTriangle(tri, videoBuffer, lPitch);
+		DrawTextureTriangle(_tri, videoBuffer, lPitch);
 		//DrawClipLine(tri.ndcA.x, tri.ndcA.y, tri.ndcB.x, tri.ndcB.y, 128, 0, 0, videoBuffer, lPitch);
 		//DrawClipLine(tri.ndcA.x, tri.ndcA.y, tri.ndcC.x, tri.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
 		//DrawClipLine(tri.ndcB.x, tri.ndcB.y, tri.ndcC.x, tri.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
@@ -98,7 +98,7 @@ void FixFail2Triangle(VertexOut fail1, VertexOut fail2, VertexOut succ)
 	float z = mainCamera.nearZ;
 	float invFail1VW = 1.0f / fail1.viewPosition.w;
 	float invFail2VW = 1.0f / fail2.viewPosition.w;
-	float invSuccVW  = 1.0f  / succ.viewPosition.w;
+	float invSuccVW  = 1.0f / succ.viewPosition.w;
 
 	Vec3 viewFail1 = Vec3(fail1.viewPosition.x * invFail1VW, fail1.viewPosition.y * invFail1VW, fail1.viewPosition.z * invFail1VW);
 	Vec3 viewFail2 = Vec3(fail2.viewPosition.x * invFail2VW, fail2.viewPosition.y * invFail2VW, fail2.viewPosition.z * invFail2VW);
@@ -142,7 +142,7 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 	float rightLength = (viewSucc1 - interParam).GetLength();
 	float invLength = 1.0f / (leftLength + rightLength);
 	leftLength *= invLength;
-	VertexOut inter1 = clamp(fail, succ1, zParam);
+	VertexOut inter1 = clamp(fail, succ1, leftLength);
 
 	zParam = CalculateZParam(viewFail.z, viewSucc2.z, z);
 	interParam = clamp(viewFail, viewSucc2, zParam);
@@ -150,7 +150,7 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 	rightLength = (viewSucc2 - interParam).GetLength();
 	invLength = 1.0f / (leftLength + rightLength);
 	leftLength *= invLength;
-	VertexOut inter2 = clamp(fail, succ2, zParam);
+	VertexOut inter2 = clamp(fail, succ2, leftLength);
 
 	tri1.CopyVertexOut(succ1, succ2, inter2);
 	tri2.CopyVertexOut(inter1, succ1, inter2);
@@ -256,7 +256,7 @@ void VertShader(Vertex& input, VertexOut& output)
 	Matrix4 mv = modelMatrix * viewMatrix;
 	Matrix4 mvp = mv * projectMatrix;
 
-	Vec3 localPosition(input.localPosition.x, input.localPosition.y, input.localPosition.z);
+	Vec4 localPosition(input.localPosition.x, input.localPosition.y, input.localPosition.z, 1.0f);
 
 	//首先先变换顶点到世界坐标系下
 	output.worldPosition = localPosition * modelMatrix;

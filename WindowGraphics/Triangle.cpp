@@ -1,6 +1,8 @@
 #include "Triangle.h"
 #include "GraphicsMod.h"
 
+extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
+
 Triangle::Triangle()
 {
 }
@@ -25,6 +27,10 @@ void Triangle::CopyVertexOut(VertexOut a, VertexOut b, VertexOut c)
 
 void Triangle::CalculateNDCVertex()
 {
+	vertexoutA.clipPosition = vertexoutA.viewPosition * projectMatrix;
+	vertexoutB.clipPosition = vertexoutB.viewPosition * projectMatrix;
+	vertexoutC.clipPosition = vertexoutC.viewPosition * projectMatrix;
+
 	float invClipAW = 1.0f / vertexoutA.clipPosition.w;
 	float invClipBW = 1.0f / vertexoutB.clipPosition.w;
 	float invClipCW = 1.0f / vertexoutC.clipPosition.w;
@@ -43,10 +49,4 @@ void Triangle::CalculateNDCVertex()
 	ndcC.x = (ndcC.x + 1.0f) * 0.5f *  (WINDOW_WIDTH - 1);
 	ndcC.y = (-ndcC.y + 1.0f) * 0.5f * (WINDOW_HEIGHT - 1);
 
-	//ndcA.x = (-ndcA.x + 1.0f) * 0.5f *  (WINDOW_WIDTH  - 1);
-	//ndcA.y = (ndcA.y + 1.0f) * 0.5f *  (WINDOW_HEIGHT - 1);
-	//ndcB.x = (-ndcB.x + 1.0f) * 0.5f *  (WINDOW_WIDTH  - 1);
-	//ndcB.y = (ndcB.y + 1.0f) * 0.5f *  (WINDOW_HEIGHT - 1);
-	//ndcC.x = (-ndcC.x + 1.0f) * 0.5f *  (WINDOW_WIDTH  - 1);
-	//ndcC.y = (ndcC.y + 1.0f) * 0.5f *  (WINDOW_HEIGHT - 1);
 }

@@ -277,6 +277,14 @@ namespace Math
 		return tmp;
 	}
 
+	//Vec3 & Vec3::operator=(const Vec3 & right)
+	//{
+	//	x = right.x;
+	//	y = right.y;
+	//	z = right.z;
+	//	return *this;
+	//}
+
 	Vec4::Vec4()
 	{
 		for(int index = 0; index < 4; index++)
@@ -329,11 +337,18 @@ namespace Math
 
 	Vec4 Vec4::operator-(const Vec4 & right)
 	{
-		return Vec4(x - right.x, y - right.y, z - right.z, w);
+		return Vec4(x - right.x, y - right.y, z - right.z, w - right.w);
 	}
 
-	
+	//Vec4 & Vec4::operator=(const Vec4 & right)
+	//{
+	//	x = right.z;
+	//	y = right.y;
+	//	z = right.z;
+	//	w = right.w;
+	//	return *this;
+	//
+	//}
 
 	
-
 }

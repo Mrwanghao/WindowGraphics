@@ -25,17 +25,25 @@ LPDIRECTDRAWSURFACE7 lpddsback = NULL;
 extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 //Math::Vec4 temp1(-20.0f, 0.0f, 0.0f, 1.0f), temp2(50.0f, 50.0f, 0.0f, 1.0f), temp3(10.0f, 0.0f, 0.0f, 1.0f);
-Math::Vec4 temp1(-20.0f, 0.0f, 10.0f, 1.0f), temp2(50.0f, 50.0f, 20.0f, 1.0f), temp3(10.0f, 10.0f, 0.0f, 1.0f);
+//Math::Vec4 temp1(-20.0f, 0.0f, 10.0f, 1.0f), temp2(50.0f, 50.0f, 20.0f, 1.0f), temp3(10.0f, 10.0f, 0.0f, 1.0f);
 
-Vertex b = Vertex(Vec4(-2.0f,  1.0f,  3.0f , 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
-Vertex a = Vertex(Vec4(2.0f ,  1.0f,  0.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
-Vertex c = Vertex(Vec4(-2.0f, -1.0f, -3.0f, 1.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
+Vertex a = Vertex(Vec3(-2.0f, -2.0f, 2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.0f));
+Vertex b = Vertex(Vec3(-2.0f,  2.0f, 2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
+Vertex c = Vertex(Vec3( 2.0f,  2.0f, 2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
+Vertex d = Vertex(Vec3( 2.0f, -2.0f, 2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
+
+#if 1
 Triangle tri(a, b, c);
+Triangle triangle2(a, c, d);
+#else
+Triangle tri(a, b, d);
+Triangle triangle2(b, c, d);
 
-Camera mainCamera(Math::Vec3(0.0f, 0.0f, 0.0f), Math::Vec3(0.0f, 0.0f, -5.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+#endif
+Camera mainCamera(Math::Vec3(0.0f, 0.0f, 0.0f), Math::Vec3(0.0f, 0.0f, -2.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 Math::Vec3 localPosition(0.0f, 0.0f, 0.0f);
-Math::Vec3 localEular(0.0f, 0.0f, 0.0f);
+Math::Vec3 localEular(0.0f, 1.0f, 0.0f);
 
 int GameInit();
 int GameMain();
@@ -138,6 +146,9 @@ int GameInit()
 	if (FAILED(lpdd->SetCooperativeLevel(main_window_hwnd, DDSCL_FULLSCREEN | DDSCL_ALLOWMODEX | DDSCL_EXCLUSIVE | DDSCL_ALLOWREBOOT)))
 		return -1;
 
+	//if (FAILED(lpdd->SetCooperativeLevel(main_window_hwnd, DDSCL_NORMAL)))
+	//	return -1;
+
 	if (FAILED(lpdd->SetDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BPP, 0, 0)))
 		return -1;
 
@@ -181,6 +192,12 @@ int GameMain()
 		
 	if (KEYDOWN(VK_DOWN))
 		mainCamera.worldPosition += Vec3(0.0f, 0.0f, -0.1f);
+
+	if (KEYDOWN(VK_F3))
+		mainCamera.worldPosition += Vec3(0.1f, 0.0f, 0.0f);
+
+	if (KEYDOWN(VK_F4))
+		mainCamera.worldPosition += Vec3(-0.1f, 0.0f, 0.0f);
 	
 	//localEular.y += 1.0f;
 	//localEular.z += 1.0f;
@@ -221,6 +238,7 @@ int GameMain()
 		return(0);
 
 	DrawLineTriangle(tri, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
+	DrawLineTriangle(triangle2, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 	
 	//DrawClipLine(temp_01.x, temp_01.y, temp_02.x, temp_02.y, 0, rand() % 256, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 	//DrawClipLine(temp_01.x, temp_01.y, temp_03.x, temp_03.y, rand() % 256, 0, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);

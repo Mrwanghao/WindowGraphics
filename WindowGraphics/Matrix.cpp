@@ -218,13 +218,13 @@ namespace Math
 		{
 			for (int j = 0; j < 4; j++)
 			{
+				temp = 0.0f;
 				for (int index = 0; index < 4; index++) 
 				{
 					temp += this->_data[i * 4 + index] * right._data[index * 4 + j];
 				}
 					
 				result._data[i * 4 + j] = temp;
-				temp = 0.0f;
 			}
 		}
 		return result;

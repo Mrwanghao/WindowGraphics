@@ -1155,42 +1155,49 @@ void DrawBottomTextureTriangle(int x1, int y1, int x2, int y2, int x3, int y3, u
 
 void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 {
-	Vec2 tempUV;
+	tri.ndcA.x = (int)tri.ndcA.x;
+	tri.ndcA.y = (int)tri.ndcA.y;
+	tri.ndcB.x = (int)tri.ndcB.x;
+	tri.ndcB.y = (int)tri.ndcB.y;
+	tri.ndcC.x = (int)tri.ndcC.x;
+	tri.ndcC.y = (int)tri.ndcC.y;
+
+	Vec2 tempNDC;
 	VertexOut tempVertexOut;
 
 	if (tri.ndcA.y > tri.ndcB.y)
 	{
-		tempUV = tri.ndcB;
+		tempNDC = tri.ndcB;
 		tempVertexOut = tri.vertexoutB;
 
 		tri.ndcB = tri.ndcA;
 		tri.vertexoutB = tri.vertexoutA;
 
-		tri.ndcA = tempUV;
+		tri.ndcA = tempNDC;
 		tri.vertexoutA = tempVertexOut;
 	}
 
 	if (tri.ndcA.y > tri.ndcC.y)
 	{
-		tempUV = tri.ndcC;
+		tempNDC = tri.ndcC;
 		tempVertexOut = tri.vertexoutC;
 
 		tri.ndcC = tri.ndcA;
 		tri.vertexoutC = tri.vertexoutA;
 
-		tri.ndcA = tempUV;
+		tri.ndcA = tempNDC;
 		tri.vertexoutA = tempVertexOut;
 	}
 
 	if (tri.ndcB.y > tri.ndcC.y)
 	{
-		tempUV = tri.ndcC;
+		tempNDC = tri.ndcC;
 		tempVertexOut = tri.vertexoutC;
 
 		tri.ndcC = tri.ndcB;
 		tri.vertexoutC = tri.vertexoutB;
 
-		tri.ndcB = tempUV;
+		tri.ndcB = tempNDC;
 		tri.vertexoutB = tempVertexOut;
 	}
 	
@@ -1206,12 +1213,10 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 
 	if ((int)tri.ndcB.y == (int)tri.ndcC.y)
 	{
-		//DrawBottomTextureTriangle(x1, y1, x2, y2, x3, y3, videoBuffer, lPitch/*, sampler*/);
 		DrawTextureBottomTriangle(tri, videoBuffer, lPitch);
 	}
 	else if ((int)tri.ndcA.y == (int)tri.ndcB.y)
 	{
-		//DrawTopTextureTriangle(x1, y1, x2, y2, x3, y3, videoBuffer, lPitch, sampler);
 		DrawTextureTopTriangle(tri, videoBuffer, lPitch);
 	}
 	else
@@ -1220,8 +1225,8 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 		Vec2 tempNDC;
 
 		float param = (float)(tri.ndcB.y - tri.ndcA.y) / (tri.ndcC.y - tri.ndcA.y);
-
 		tempNDC = clamp(tri.ndcA, tri.ndcC, param);
+		//param = (float)(tri.vertexoutB.viewPosition.y - tri.vertexoutA.viewPosition.y) / (tri.vertexoutC.viewPosition.y - tri.vertexoutA.viewPosition.y);
 		tempVertexOut = clamp(tri.vertexoutA, tri.vertexoutC, param);
 
 		Triangle tempTri;
@@ -1240,29 +1245,24 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 		tempTri.ndcC = tri.ndcC;
 		tempTri.vertexoutC = tri.vertexoutC;
 		DrawTextureTopTriangle(tempTri, videoBuffer, lPitch);
-		//temp.CopyVertexOut();
-		//DrawTextureBottomTriangle();
-		//newX = (int)(0.5f + x1 + (float)(y2 - y1) * (x3 - x1) / (y3 - y1));
-		//DrawBottomTextureTriangle(x1, y1, x2, y2, newX, y2, videoBuffer, lPitch/*, sampler*/);
-		//DrawTopTextureTriangle(x2, y2, newX, y2, x3, y3, videoBuffer, lPitch, sampler);
-
+		
 	}
 }
 
 void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 {
-	Vec2 middleUV;
+	Vec2 middleNDC;
 	VertexOut tempVertexOut;
 
 	if (tri.ndcA.x > tri.ndcB.x)
 	{
-		middleUV = tri.ndcB;
+		middleNDC = tri.ndcB;
 		tempVertexOut = tri.vertexoutB;
 
 		tri.ndcB = tri.ndcA;
 		tri.vertexoutB = tri.vertexoutA;
 
-		tri.ndcA = middleUV;
+		tri.ndcA = middleNDC;
 		tri.vertexoutA = tempVertexOut;
 	}
 
@@ -1339,10 +1339,8 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 			left = (int)xs;
 			right = (int)xe;
 
-			
-
 			tempUV = tempLeftUV;
-			uv_step = (tempRightUV - tempLeftUV) / (xe - xs + 1);
+			uv_step = (tempRightUV - tempLeftUV) / (right - left + 1);
 
 			if (left < MIN_CLIP_X)
 			{
@@ -1368,17 +1366,8 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 
 				tempColor = bmpTexture.sampler->sample(tempUV.x, tempUV.y);
 
-				if (left + index < lPitch)
-				{
-					*(videoBuffer + left + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
-
-				}
-				else
-				{
-					int a = 2;
-					a++;
-				}
-
+				*(videoBuffer + left + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
+				
 				tempUV += uv_step;
 				
 			}
@@ -1394,18 +1383,18 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 
 void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 {
-	Vec2 middleUV;
+	Vec2 middleNDC;
 	VertexOut tempVertexOut;
 
 	if (tri.ndcB.x > tri.ndcC.x)
 	{
-		middleUV = tri.ndcC;
+		middleNDC = tri.ndcC;
 		tempVertexOut = tri.vertexoutC;
 
 		tri.ndcC = tri.ndcB;
 		tri.vertexoutC = tri.vertexoutB;
 
-		tri.ndcB = middleUV;
+		tri.ndcB = middleNDC;
 		tri.vertexoutB = tempVertexOut;
 	}
 
@@ -1418,7 +1407,7 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 	dx_right = (float)(tri.ndcC.x - tri.ndcA.x) / height;
 
 	float xs = (float)tri.ndcA.x;
-	float xe = (float)tri.ndcA.x + 0.5f;
+	float xe = (float)tri.ndcA.x;
 
 	Vec2 tempLeftUV = tri.vertexoutA.uv;
 	Vec2 tempRightUV = tri.vertexoutA.uv;
@@ -1490,7 +1479,7 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 			tempRightUV += duv_right;
 
 			tempUV = tempLeftUV;
-			uv_step = (tempRightUV - tempLeftUV) / (xe - xs + 1);
+			uv_step = (tempRightUV - tempLeftUV) / (right - left + 1);
 
 			if (left < MIN_CLIP_X)
 			{

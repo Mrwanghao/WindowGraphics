@@ -9,38 +9,22 @@ extern Camera mainCamera;
 extern Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 
-
-
-
 VertexOut clamp(VertexOut& left, VertexOut& right, float t)
 {
 	VertexOut result;
+
 	result.clipPosition = clamp(left.clipPosition, right.clipPosition, t);
-	//result.clipPosition.w = 1.0f;
 	result.viewPosition = clamp(left.viewPosition, right.viewPosition, t);
-	//result.viewPosition.w = 1.0f;
 	result.worldPosition = clamp(left.worldPosition, right.worldPosition, t);
-	//result.worldPosition.w = 1.0f;
 	result.worldNormal = clamp(left.worldNormal, right.worldNormal, t);
 	result.uv = clamp(left.uv, right.uv, t);
-
-	/*result.clipPosition.x = right.clipPosition.x * (1 - t) + left.clipPosition.x * t;
-	result.clipPosition.y = right.clipPosition.y * (1 - t) + left.clipPosition.y * t;
-	result.clipPosition.z = right.clipPosition.z * (1 - t) + left.clipPosition.z * t;
-	result.clipPosition.w = 1.0f;											  
-	result.viewPosition.x = right.viewPosition.x * (1 - t) + left.viewPosition.x * t;
-	result.viewPosition.y = right.viewPosition.y * (1 - t) + left.viewPosition.y * t;
-	result.viewPosition.z = right.viewPosition.z * (1 - t) + left.viewPosition.z * t;
-	result.viewPosition.w = 1.0f;*/
-	//result.worldPosition = right.worldPosition * t + left.worldPosition * (1 - t);
-	//result.worldNormal = right.worldNormal * t + left.worldNormal * (1 - t);
-	//result.uv = right.uv * t + left.uv * (1 - t);
+											
 	return result;
 }
 
 Math::Vec4 clamp(Math::Vec4 min, Math::Vec4 max, float t)
 {
-#if 1
+#if 0
 	Vec4 lerp = min + (max - min) * t;
 	lerp.w = min.w;
 	return lerp;

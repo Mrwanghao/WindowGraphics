@@ -32,7 +32,7 @@ Sampler::~Sampler()
 Vec4 Sampler::sample(float s, float t)
 {
 	if (s < 0.0f || s > 1.0f || t < 0.0f || t > 1.0f)
-		return Vec4(255, 255, 255, 255);
+		return Vec4(0, 0, 255, 255);
 	int allLength = width * height * 3;
 
 
@@ -71,28 +71,28 @@ Vec4 Sampler::sample(float s, float t)
 
 	Vec4 colorNextU(1.0f, 1.0f, 1.0f, 1.0f), colorNextV(1.0f, 1.0f, 1.0f, 1.0f), colorNextUV(1.0f, 1.0f, 1.0f, 1.0f);
 
-	if (imageIndexNextU >= allLength)
-	{
-		imageIndexNextU = allLength - 3;
-	}
+	//if (imageIndexNextU >= allLength)
+	//{
+	//	imageIndexNextU = allLength - 3;
+	//}
 
 	colorNextU.x  = (float)imageData[imageIndexNextU];
 	colorNextU.y  = (float)imageData[imageIndexNextU];
 	colorNextU.z  = (float)imageData[imageIndexNextU];
 
-	if (imageIndexNextV >= allLength)
-	{
-		imageIndexNextV = allLength - 3;
-	}
+	//if (imageIndexNextV >= allLength)
+	//{
+	//	imageIndexNextV = allLength - 3;
+	//}
 				  									
 	colorNextV.x = (float)imageData[imageIndexNextV];
 	colorNextV.y = (float)imageData[imageIndexNextV];
 	colorNextV.z = (float)imageData[imageIndexNextV];
 
-	if (imageIndexNextUV >= allLength)
-	{
-		imageIndexNextUV = allLength - 3;
-	}
+	//if (imageIndexNextUV >= allLength)
+	//{
+	//	imageIndexNextUV = allLength - 3;
+	//}
 													 
 	colorNextUV.x = (float)imageData[imageIndexNextUV];
 	colorNextUV.y = (float)imageData[imageIndexNextUV];
