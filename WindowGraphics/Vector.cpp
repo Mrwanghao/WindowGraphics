@@ -232,11 +232,11 @@ namespace Math
 		}
 	}
 
-	Vec4 Vec3::operator*(const Matrix4 & right) const
+	Vec3 Vec3::operator*(const Matrix4 & right) const
 	{
 		Vec4 result(this->x, this->y, this->z, 1.0f);
 		result *= right;
-		return result;
+		return Vec3(result.x, result.y, result.z);
 	}
 
 	Vec3 Vec3::operator-(const Vec3 & right) const
@@ -275,6 +275,13 @@ namespace Math
 		tmp.y = -y;
 		tmp.z = -z;
 		return tmp;
+	}
+
+	void Vec3::operator*=(float scale)
+	{
+		x *= scale;
+		y *= scale;
+		z *= scale;
 	}
 
 	//Vec3 & Vec3::operator=(const Vec3 & right)

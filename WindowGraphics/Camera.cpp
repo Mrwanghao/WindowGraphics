@@ -37,3 +37,8 @@ void Camera::CalWorldToCameraMatrix()
 	viewMatrix = GetViewMatrix(worldPosition, cameraDirection);
 }
 
+Math::Vec3 Camera::GetCameraForward()
+{
+	return GetForward(cameraDirection.y);
+}
+

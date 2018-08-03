@@ -51,6 +51,15 @@
     <ClCompile Include="Vertex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DepthBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BMPFile.h">
@@ -84,6 +93,18 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthBuffer.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

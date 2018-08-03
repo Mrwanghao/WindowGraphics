@@ -1155,6 +1155,7 @@ void DrawBottomTextureTriangle(int x1, int y1, int x2, int y2, int x3, int y3, u
 
 void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 {
+	tri.CalculateNDCVertex();
 	tri.ndcA.x = (int)tri.ndcA.x;
 	tri.ndcA.y = (int)tri.ndcA.y;
 	tri.ndcB.x = (int)tri.ndcB.x;

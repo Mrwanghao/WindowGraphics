@@ -11,6 +11,7 @@ public:
 
 public:
 	void CalWorldToCameraMatrix();
+	Math::Vec3 GetCameraForward();
 
 public:
 	Math::Vec3 cameraDirection;

@@ -16,7 +16,6 @@ float clamp(float min, float max, float t);
 
 
 
-Math::Vec3 Cross(const Math::Vec3& left, const Math::Vec3& right);
 
 Math::Matrix4 translateToMatrix(const Math::Vec3& worldPosition);
 Math::Matrix4 eularToMatrix(const Math::Vec3& eular);
@@ -26,3 +25,5 @@ Math::Matrix4 GetModelMatrix(Math::Vec3 position, Math::Vec3 eular);
 Math::Matrix4 GetViewMatrix(Math::Vec3 position, Math::Vec3 eular);
 Math::Matrix4 GetPerspectiveMatrix(float fovx, float aspect, float zn, float zf);
 
+Math::Vec3 Cross(const Math::Vec3& left, const Math::Vec3& right);
+Math::Vec3 GetForward(float yAngle);

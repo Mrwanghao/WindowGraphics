@@ -134,6 +134,9 @@
     <ClCompile Include="BMPFile.cpp" />
     <ClCompile Include="BMPTexture.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DepthBuffer.cpp" />
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GraphicsMod.cpp" />
     <ClCompile Include="main.cpp" />
@@ -148,6 +151,10 @@
     <ClInclude Include="BMPFile.h" />
     <ClInclude Include="BMPTexture.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="DepthBuffer.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GraphicsMod.h" />
     <ClInclude Include="MathUtil.h" />

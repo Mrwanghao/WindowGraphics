@@ -32,6 +32,7 @@ void DrawLineTriangle(Triangle& _tri, unsigned int* videoBuffer, int lPitch)
 	if (clipFlag != 111)
 	{
 		//需要切割
+
 		if (clipFlag == 000)
 		{
 			//全部被切割了 所以不用渲染了
@@ -42,52 +43,24 @@ void DrawLineTriangle(Triangle& _tri, unsigned int* videoBuffer, int lPitch)
 		FixTriangle(_tri, clipFlag);
 		
 		//渲染第一个三角形
-		tri1.CalculateNDCVertex();
-		//DrawGouraudTriangle(tri1.ndcA.x, tri1.ndcA.y, tri1.ndcB.x, tri1.ndcB.y, tri1.ndcC.x, tri1.ndcC.y, videoBuffer, lPitch);
 		DrawTextureTriangle(tri1, videoBuffer, lPitch);
 		
-		//DrawClipLine(tri1.ndcA.x, tri1.ndcA.y, tri1.ndcB.x, tri1.ndcB.y, 128, 0, 0,videoBuffer, lPitch);
-		//DrawClipLine(tri1.ndcA.x, tri1.ndcA.y, tri1.ndcC.x, tri1.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
-		//DrawClipLine(tri1.ndcB.x, tri1.ndcB.y, tri1.ndcC.x, tri1.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
-
-		//DrawTextureTriangle(tri1.ndcA.x, tri1.ndcA.y, tri1.ndcB.x, tri1.ndcB.y, tri1.ndcC.x, tri1.ndcC.y, videoBuffer, lPitch);
-
 		//有可能需要渲染第二个三角形
 		if (clipFlag == 101 || clipFlag == 110 || clipFlag == 011)
 		{
 			//渲染第二个三角形
-			tri2.CalculateNDCVertex();
-
-			//DrawGouraudTriangle(tri2.ndcA.x, tri2.ndcA.y, tri2.ndcB.x, tri2.ndcB.y, tri2.ndcC.x, tri2.ndcC.y, videoBuffer, lPitch);
 			DrawTextureTriangle(tri2, videoBuffer, lPitch);
- 			//DrawClipLine(tri2.ndcA.x, tri2.ndcA.y, tri2.ndcB.x, tri2.ndcB.y, 0, 128, 128, videoBuffer, lPitch);
-			//DrawClipLine(tri2.ndcA.x, tri2.ndcA.y, tri2.ndcC.x, tri2.ndcC.y, 0, 128, 128, videoBuffer, lPitch);
-			//DrawClipLine(tri2.ndcB.x, tri2.ndcB.y, tri2.ndcC.x, tri2.ndcC.y, 0, 128, 128, videoBuffer, lPitch);
-
-			//DrawTextureTriangle(tri2.ndcA.x, tri2.ndcA.y, tri2.ndcB.x, tri2.ndcB.y, tri2.ndcC.x, tri2.ndcC.y, videoBuffer, lPitch);
-
 		}
 
 	}
 	else if (clipFlag == 111)
 	{
 		//不需切割
-		_tri.CalculateNDCVertex();
-
-		//DrawGouraudTriangle(tri.ndcA.x, tri.ndcA.y, tri.ndcB.x, tri.ndcB.y, tri.ndcC.x, tri.ndcC.y, videoBuffer, lPitch);
 		DrawTextureTriangle(_tri, videoBuffer, lPitch);
-		//DrawClipLine(tri.ndcA.x, tri.ndcA.y, tri.ndcB.x, tri.ndcB.y, 128, 0, 0, videoBuffer, lPitch);
-		//DrawClipLine(tri.ndcA.x, tri.ndcA.y, tri.ndcC.x, tri.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
-		//DrawClipLine(tri.ndcB.x, tri.ndcB.y, tri.ndcC.x, tri.ndcC.y, 128, 0, 0, videoBuffer, lPitch);
-
-		//DrawTextureTriangle(tri.ndcA.x, tri.ndcA.y, tri.ndcB.x, tri.ndcB.y, tri.ndcC.x, tri.ndcC.y, videoBuffer, lPitch);
 	}
-
 }
 
-
 #pragma region 裁剪三角形
-
 float CalculateZParam(float min, float max, float t)
 {
 	return (t - min) / (max - min);
@@ -98,7 +71,7 @@ void FixFail2Triangle(VertexOut fail1, VertexOut fail2, VertexOut succ)
 	float z = mainCamera.nearZ;
 	float invFail1VW = 1.0f / fail1.viewPosition.w;
 	float invFail2VW = 1.0f / fail2.viewPosition.w;
-	float invSuccVW  = 1.0f / succ.viewPosition.w;
+	float invSuccVW  = 1.0f /  succ.viewPosition.w;
 
 	Vec3 viewFail1 = Vec3(fail1.viewPosition.x * invFail1VW, fail1.viewPosition.y * invFail1VW, fail1.viewPosition.z * invFail1VW);
 	Vec3 viewFail2 = Vec3(fail2.viewPosition.x * invFail2VW, fail2.viewPosition.y * invFail2VW, fail2.viewPosition.z * invFail2VW);
@@ -106,21 +79,21 @@ void FixFail2Triangle(VertexOut fail1, VertexOut fail2, VertexOut succ)
 
 	float zParam = CalculateZParam(viewFail1.z, viewSucc.z, z);
 	Vec3 interParam = clamp(viewFail1, viewSucc, zParam);
-	float leftLength = (viewFail1 - interParam).GetLength();
-	float rightLength = (viewSucc - interParam).GetLength();
-	float invLength = 1.0f / (leftLength + rightLength);
-	leftLength *= invLength;
+	float partialLength = (viewFail1 - interParam).GetLength();
+	float allLength = (viewSucc - viewFail1).GetLength();
+	float invLength = 1.0f / allLength;
+	partialLength *= invLength;
 
-	VertexOut inter1 = clamp(fail1, succ, zParam);
+	VertexOut inter1 = clamp(fail1, succ, partialLength);
 	
 	zParam = CalculateZParam(viewFail2.z, viewSucc.z, z);
 	interParam = clamp(viewFail2, viewSucc, zParam);
-	leftLength = (viewFail2 - interParam).GetLength();
-	rightLength = (viewSucc - interParam).GetLength();
-	invLength = 1.0f / (leftLength + rightLength);
-	leftLength *= invLength;
+	partialLength = (viewFail2 - interParam).GetLength();
+	allLength = (viewSucc - viewFail2).GetLength();
+	invLength = 1.0f / allLength;
+	partialLength *= invLength;
 
-	VertexOut inter2 = clamp(fail2, succ, zParam);
+	VertexOut inter2 = clamp(fail2, succ, partialLength);
 
 	tri1.CopyVertexOut(inter1, inter2, succ);
 }
@@ -138,22 +111,22 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 
 	float zParam = CalculateZParam(viewFail.z, viewSucc1.z, z);
 	Vec3 interParam = clamp(viewFail, viewSucc1, zParam);
-	float leftLength = (viewFail - interParam).GetLength();
-	float rightLength = (viewSucc1 - interParam).GetLength();
-	float invLength = 1.0f / (leftLength + rightLength);
-	leftLength *= invLength;
-	VertexOut inter1 = clamp(fail, succ1, leftLength);
+	float partialLength = (viewFail - interParam).GetLength();
+	float allLength = (viewSucc1 - viewFail).GetLength();
+	float invLength = 1.0f / allLength;
+	partialLength *= invLength;
+	VertexOut inter1 = clamp(fail, succ1, partialLength);
 
 	zParam = CalculateZParam(viewFail.z, viewSucc2.z, z);
 	interParam = clamp(viewFail, viewSucc2, zParam);
-	leftLength = (viewFail - interParam).GetLength();
-	rightLength = (viewSucc2 - interParam).GetLength();
-	invLength = 1.0f / (leftLength + rightLength);
-	leftLength *= invLength;
-	VertexOut inter2 = clamp(fail, succ2, leftLength);
+	partialLength = (viewFail - interParam).GetLength();
+	allLength = (viewSucc2 - viewFail).GetLength();
+	invLength = 1.0f / allLength;
+	partialLength *= invLength;
+	VertexOut inter2 = clamp(fail, succ2, partialLength);
 
-	tri1.CopyVertexOut(succ1, succ2, inter2);
-	tri2.CopyVertexOut(inter1, succ1, inter2);
+	tri1.CopyVertexOut(succ1, succ2, inter1);
+	tri2.CopyVertexOut(inter1, succ2, inter2);
 }
 
 void FixTriangle(const Triangle & tri, int clipFlag)
@@ -268,7 +241,7 @@ void VertShader(Vertex& input, VertexOut& output)
 	output.clipPosition = localPosition * mvp;
 
 	//法线变换到世界坐标系下
-	output.worldPosition = input.localNormal * modelMatrix;
+	output.worldNormal = input.localNormal * modelMatrix;
 
 	//赋值uv
 	output.uv = input.uv;

@@ -120,4 +120,10 @@ Math::Matrix4 GetPerspectiveMatrix(float fovx, float aspect, float zn, float zf)
 	return projectMatrix;
 }
 
+Math::Vec3 GetForward(float yAngle)
+{
+	float rad = DegToRad(yAngle + 90);
+	return Math::Vec3(cosf(rad), 0.0f, sinf(rad));
+}
+
 #pragma endregion
