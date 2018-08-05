@@ -79,8 +79,6 @@ namespace Math
 		return this->x * right.x + this->y * right.y;
 	}
 
-	
-
 	Vec2 Vec2::operator*(float scale) const
 	{
 		return Vec2(this->x * scale, this->y * scale);
@@ -125,17 +123,17 @@ namespace Math
 
 	Vec2 Vec2::operator+(const Vec2 & right) const
 	{
-		return Vec2(this->x + right.x, this->y + right.y);
+		return Vec2(x + right.x, y + right.y);
 	}
 
 	Vec2 Vec2::operator-(const Vec2 & right) const
 	{
-		return Vec2(this->x - right.x, this->y - right.y);
+		return Vec2(x - right.x, y - right.y);
 	}
 
 	Vec2 Vec2::operator*(const Vec2 & right) const
 	{
-		return Vec2(this->x * right.x, this->y * right.y);
+		return Vec2(x * right.x, y * right.y);
 	}
 
 	void Vec2::operator+=(const Vec2 & right)
@@ -144,20 +142,17 @@ namespace Math
 		y += right.y;
 	}
 
-	
-
 	Vec2 Vec2::operator*(const Matrix2 & right)
 	{
 		Vec2 result;
-		float temp = 0.0f;
 		for (int i = 0; i < 2; i++)
 		{
+			float temp = 0.0f;
 			for (int j = 0; j < 2; j++)
 			{
-				temp += this->_data[j] * right._data[j * 2 + i];
-
+				temp += this->data[j] * right.data[j * 2 + i];
 			}
-			result._data[i] = temp;
+			result.data[i] = temp;
 		}
 
 		return result;
@@ -165,15 +160,15 @@ namespace Math
 
 	Vec2 & Vec2::operator=(const Vec2 & right)
 	{
+		if(this == &right)
+		{
+			return *this;
+		}
+
 		x = right.x;
 		y = right.y;
 		return *this;
 	}
-
-	
-
-	
-
 
 	Vec3::Vec3()
 	{
@@ -225,10 +220,10 @@ namespace Math
 			float temp = 0.0f;
 			for (int j = 0; j < 3; j++)
 			{
-				temp += this->_data[j] * right._data[j * 3 + i];
+				temp += this->data[j] * right.data[j * 3 + i];
 
 			}
-			this->_data[i] = temp;
+			this->data[i] = temp;
 		}
 	}
 
@@ -284,18 +279,23 @@ namespace Math
 		z *= scale;
 	}
 
-	//Vec3 & Vec3::operator=(const Vec3 & right)
-	//{
-	//	x = right.x;
-	//	y = right.y;
-	//	z = right.z;
-	//	return *this;
-	//}
+	Vec3& Vec3::operator=(const Vec3 & right)
+	{
+		if (this == &right)
+		{
+			return *this;
+		}
+
+		x = right.x;
+		y = right.y;
+		z = right.z;
+		return *this;
+	}
 
 	Vec4::Vec4()
 	{
 		for(int index = 0; index < 4; index++)
-			this->_data[index] = 0.0f;
+			this->data[index] = 0.0f;
 	}
 
 	Vec4::Vec4(float _x, float _y, float _z, float _w)
@@ -314,10 +314,10 @@ namespace Math
 			float temp = 0.0f;
 			for (int j = 0; j < 4; j++)
 			{
-				temp += this->_data[j] * right._data[j * 4 + i];
+				temp += this->data[j] * right.data[j * 4 + i];
 
 			}
-			result._data[i] = temp;
+			result.data[i] = temp;
 		}
 		return result;
 	}
@@ -325,6 +325,20 @@ namespace Math
 	void Vec4::operator*=(const Matrix4 & right)
 	{
 		*this = *this * right;
+	}
+
+	Vec4& Vec4::operator=(const Vec4 & right)
+	{
+		if (this == &right)
+		{
+			return *this;
+		}
+
+		x = right.x;
+		y = right.y;
+		z = right.z;
+		w = right.w;
+		return *this;
 	}
 
 	Vec4 Vec4::operator*(const Vec4 & right)
@@ -346,16 +360,5 @@ namespace Math
 	{
 		return Vec4(x - right.x, y - right.y, z - right.z, w - right.w);
 	}
-
-	//Vec4 & Vec4::operator=(const Vec4 & right)
-	//{
-	//	x = right.z;
-	//	y = right.y;
-	//	z = right.z;
-	//	w = right.w;
-	//	return *this;
-	//
-	//}
-
 	
 }

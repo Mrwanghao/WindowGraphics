@@ -42,11 +42,11 @@ void Triangle::CalculateNDCVertex()
 	ndcC.x = vertexoutC.clipPosition.x * invClipCW;
 	ndcC.y = vertexoutC.clipPosition.y * invClipCW;
 
-	ndcA.x = (ndcA.x + 1.0f) * 0.5f *  (WINDOW_WIDTH - 1);
+	ndcA.x = ( ndcA.x + 1.0f) * 0.5f * (WINDOW_WIDTH - 1);
 	ndcA.y = (-ndcA.y + 1.0f) * 0.5f * (WINDOW_HEIGHT - 1);
-	ndcB.x = (ndcB.x + 1.0f) * 0.5f *  (WINDOW_WIDTH - 1);
+	ndcB.x = ( ndcB.x + 1.0f) * 0.5f * (WINDOW_WIDTH - 1);
 	ndcB.y = (-ndcB.y + 1.0f) * 0.5f * (WINDOW_HEIGHT - 1);
-	ndcC.x = (ndcC.x + 1.0f) * 0.5f *  (WINDOW_WIDTH - 1);
+	ndcC.x = ( ndcC.x + 1.0f) * 0.5f * (WINDOW_WIDTH - 1);
 	ndcC.y = (-ndcC.y + 1.0f) * 0.5f * (WINDOW_HEIGHT - 1);
 
 }

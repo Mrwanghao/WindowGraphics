@@ -77,23 +77,23 @@ void FixFail2Triangle(VertexOut fail1, VertexOut fail2, VertexOut succ)
 	Vec3 viewFail2 = Vec3(fail2.viewPosition.x * invFail2VW, fail2.viewPosition.y * invFail2VW, fail2.viewPosition.z * invFail2VW);
 	Vec3 viewSucc  = Vec3(succ.viewPosition.x  * invSuccVW , succ.viewPosition.y  * invSuccVW , succ.viewPosition.z  * invSuccVW);
 
-	float zParam = CalculateZParam(viewFail1.z, viewSucc.z, z);
-	Vec3 interParam = clamp(viewFail1, viewSucc, zParam);
-	float partialLength = (viewFail1 - interParam).GetLength();
+	float zParam = CalculateZParam(viewSucc.z, viewFail1.z, z);
+	Vec3 interParam = clamp(viewSucc, viewFail1, zParam);
+	float partialLength = (viewSucc - interParam).GetLength();
 	float allLength = (viewSucc - viewFail1).GetLength();
 	float invLength = 1.0f / allLength;
 	partialLength *= invLength;
 
-	VertexOut inter1 = clamp(fail1, succ, partialLength);
+	VertexOut inter1 = clamp(succ, fail1, partialLength);
 	
-	zParam = CalculateZParam(viewFail2.z, viewSucc.z, z);
-	interParam = clamp(viewFail2, viewSucc, zParam);
-	partialLength = (viewFail2 - interParam).GetLength();
+	zParam = CalculateZParam(viewSucc.z, viewFail2.z, z);
+	interParam = clamp(viewSucc, viewFail2, zParam);
+	partialLength = (viewSucc - interParam).GetLength();
 	allLength = (viewSucc - viewFail2).GetLength();
 	invLength = 1.0f / allLength;
 	partialLength *= invLength;
 
-	VertexOut inter2 = clamp(fail2, succ, partialLength);
+	VertexOut inter2 = clamp(succ, fail2, partialLength);
 
 	tri1.CopyVertexOut(inter1, inter2, succ);
 }
@@ -107,7 +107,7 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 
 	Vec3 viewSucc1 = Vec3(succ1.viewPosition.x * invSucc1VW, succ1.viewPosition.y * invSucc1VW, succ1.viewPosition.z * invSucc1VW);
 	Vec3 viewSucc2 = Vec3(succ2.viewPosition.x * invSucc2VW, succ2.viewPosition.y * invSucc2VW, succ2.viewPosition.z * invSucc2VW);
-	Vec3 viewFail  = Vec3(fail.viewPosition.x  * invFailVW, fail.viewPosition.y   * invFailVW, fail.viewPosition.z   * invFailVW);
+	Vec3 viewFail  = Vec3(fail.viewPosition.x  * invFailVW , fail.viewPosition.y   * invFailVW, fail.viewPosition.z   * invFailVW);
 
 	float zParam = CalculateZParam(viewFail.z, viewSucc1.z, z);
 	Vec3 interParam = clamp(viewFail, viewSucc1, zParam);

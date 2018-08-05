@@ -6,7 +6,6 @@ namespace Math
 	class Matrix2;
 	class Matrix3;
 	class Matrix4;
-	class Vec4;
 
 	class Vec2
 	{
@@ -18,7 +17,7 @@ namespace Math
 	public:
 		union 
 		{
-			float _data[2];
+			float data[2];
 			struct 
 			{
 				float x;
@@ -77,7 +76,7 @@ namespace Math
 	public:
 		union
 		{
-			float _data[3];
+			float data[3];
 			struct
 			{
 				float x;
@@ -105,6 +104,7 @@ namespace Math
 
 		Vec3 operator-();
 		void operator*=(float scale);
+		Vec3& operator=(const Vec3& right);
 	};
 
 	class Vec4
@@ -116,7 +116,7 @@ namespace Math
 	public:
 		union
 		{
-			float _data[4];
+			float data[4];
 			struct
 			{
 				float x;
@@ -127,15 +127,12 @@ namespace Math
 		};
 	public:
 		Vec4 operator*(const Matrix4& right);
-		void operator*=(const Matrix4& right);
 		Vec4 operator*(const Vec4& right);
 		Vec4 operator*(float scale);
 		Vec4 operator+(const Vec4& right);
 		Vec4 operator-(const Vec4& right);
-		//Vec4& operator=(const Vec4& right);
-
-	public:
-		
+		void operator*=(const Matrix4& right);
+		Vec4& operator=(const Vec4& right);
 	};
 
 	

@@ -6,7 +6,7 @@
 using namespace Math;
 
 extern Camera mainCamera;
-extern Matrix4 modelMatrix, viewMatrix, projectMatrix;
+//extern Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 
 VertexOut clamp(VertexOut& left, VertexOut& right, float t)
@@ -24,13 +24,7 @@ VertexOut clamp(VertexOut& left, VertexOut& right, float t)
 
 Math::Vec4 clamp(Math::Vec4 min, Math::Vec4 max, float t)
 {
-#if 0
-	Vec4 lerp = min + (max - min) * t;
-	lerp.w = min.w;
-	return lerp;
-#else
 	return min + (max - min) * t;
-#endif
 }
 
 Vec3 clamp(Vec3 min, Vec3 max, float t)
@@ -47,7 +41,6 @@ float clamp(float min, float max, float t)
 {
 	return min + (max - min) * t;
 }
-
 
 Math::Vec3 Cross(const Math::Vec3 & left, const Math::Vec3 & right)
 {
@@ -93,37 +86,36 @@ Math::Matrix4 GetMatrixByTranslateAndEular(Math::Vec3 worldPosition, Math::Vec3 
 
 Math::Matrix4 GetModelMatrix(Math::Vec3 position, Math::Vec3 eular)
 {
-	modelMatrix = GetMatrixByTranslateAndEular(position, eular);
-	return modelMatrix;
+	return GetMatrixByTranslateAndEular(position, eular);
 }
 
 Math::Matrix4 GetViewMatrix(Vec3 cameraPosition, Vec3 cameraDirection)
 {
-	viewMatrix = GetMatrixByTranslateAndEular(-cameraPosition, -cameraDirection);
-	return viewMatrix;
+	return GetMatrixByTranslateAndEular(-cameraPosition, -cameraDirection);
 }
 
 Math::Matrix4 GetPerspectiveMatrix(float fovx, float aspect, float zn, float zf)
 {
-	projectMatrix.Identity();
+	Matrix4 result;
+	result.Identity();
 
 	float rad = DegToRad(fovx / 2.0f);
 	float cotan_fovx = 1.0f / tan(rad);
 
-	projectMatrix._data[0] = cotan_fovx;
-	projectMatrix._data[5] = cotan_fovx * aspect;
-	projectMatrix._data[10] = zf / (zf - zn);
-	projectMatrix._data[11] = 1.0f;
-	projectMatrix._data[14] = - zn * zf / (zf - zn);
-	projectMatrix._data[15] = 0.0f;
+	result.data[0] = cotan_fovx;
+	result.data[5] = cotan_fovx * aspect;
+	result.data[10] = zf / (zf - zn);
+	result.data[11] = 1.0f;
+	result.data[14] = - zn * zf / (zf - zn);
+	result.data[15] = 0.0f;
 
-	return projectMatrix;
+	return result;
 }
 
 Math::Vec3 GetForward(float yAngle)
 {
-	float rad = DegToRad(yAngle + 90);
-	return Math::Vec3(cosf(rad), 0.0f, sinf(rad));
+	float rad = DegToRad(yAngle);
+	return Math::Vec3(sinf(rad), 0.0f, cosf(rad));
 }
 
 #pragma endregion

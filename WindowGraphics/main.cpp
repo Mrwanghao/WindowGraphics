@@ -24,9 +24,6 @@ LPDIRECTDRAWSURFACE7 lpddsback = NULL;
 
 extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
-//Math::Vec4 temp1(-20.0f, 0.0f, 0.0f, 1.0f), temp2(50.0f, 50.0f, 0.0f, 1.0f), temp3(10.0f, 0.0f, 0.0f, 1.0f);
-//Math::Vec4 temp1(-20.0f, 0.0f, 10.0f, 1.0f), temp2(50.0f, 50.0f, 20.0f, 1.0f), temp3(10.0f, 10.0f, 0.0f, 1.0f);
-
 Vertex a = Vertex(Vec3(-2.0f, -2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.0f));
 Vertex b = Vertex(Vec3(-2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
 Vertex c = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
@@ -37,16 +34,16 @@ Vertex g = Vertex(Vec3( 2.0f,  2.0f,  6.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(
 Vertex h = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
 
 
-#if 1
+#if 0
 Triangle triangle1(a, b, c);
 Triangle triangle2(a, c, d);
-Triangle triangle3(e, f, g);
-Triangle triangle4(e, g, h);
 #else
-Triangle tri(a, b, d);
+Triangle triangle1(a, b, d);
 Triangle triangle2(b, c, d);
 
 #endif
+Triangle triangle3(e, f, g);
+Triangle triangle4(e, g, h);
 Camera mainCamera(Math::Vec3(0.0f, 0.0f, 0.0f), Math::Vec3(0.0f, 0.0f, -2.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 Math::Vec3 localPosition(0.0f, 0.0f, 0.0f);
@@ -153,9 +150,6 @@ int GameInit()
 	if (FAILED(lpdd->SetCooperativeLevel(main_window_hwnd, DDSCL_FULLSCREEN | DDSCL_ALLOWMODEX | DDSCL_EXCLUSIVE | DDSCL_ALLOWREBOOT)))
 		return -1;
 
-	//if (FAILED(lpdd->SetCooperativeLevel(main_window_hwnd, DDSCL_NORMAL)))
-	//	return -1;
-
 	if (FAILED(lpdd->SetDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BPP, 0, 0)))
 		return -1;
 
@@ -189,10 +183,10 @@ int GameMain()
 		mainCamera.nearZ += -0.1f;
 	
 	if (KEYDOWN(VK_LEFT))
-		mainCamera.cameraDirection.y += 1.0f;
+		mainCamera.cameraDirection.y -= 1.0f;
 
 	if (KEYDOWN(VK_RIGHT))
-		mainCamera.cameraDirection.y -= 1.0f;
+		mainCamera.cameraDirection.y += 1.0f;
 
 	Vec3 forward = mainCamera.GetCameraForward();
 	forward.Normalize();
@@ -207,15 +201,14 @@ int GameMain()
 	right.Normalize();
 
 	if (KEYDOWN(VK_F3))
-		mainCamera.worldPosition += right * 0.1f;
+		mainCamera.worldPosition -= right * 0.1f;
 
 	if (KEYDOWN(VK_F4))
-		mainCamera.worldPosition -= right * 0.1f;
+		mainCamera.worldPosition += right * 0.1f;
 	
 	modelMatrix = GetModelMatrix(localPosition, localEular);
-	mainCamera.CalWorldToCameraMatrix();
-	//viewMatrix = GetViewMatrix(mainCamera.worldPosition, mainCamera.cameraDirection);
-	projectMatrix = GetPerspectiveMatrix(90.0f, (float)((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT), mainCamera.nearZ, 500.0f);
+	viewMatrix = GetViewMatrix(mainCamera.worldPosition, mainCamera.cameraDirection);
+	projectMatrix = GetPerspectiveMatrix(90.0f, mainCamera.aspectRatio, mainCamera.nearZ, mainCamera.farZ);
 	
 	if (FAILED(lpddsback->Lock(NULL, &ddsd,
 		DDLOCK_WAIT | DDLOCK_SURFACEMEMORYPTR,
@@ -227,14 +220,10 @@ int GameMain()
 	DrawLineTriangle(triangle1, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 	DrawLineTriangle(triangle2, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
 	
-	DrawClipLine(0, 0, 320, 240, 0, rand() % 256, 0, (UINT*)ddsd.lpSurface, ddsd.lPitch >> 2);
-
 	if (FAILED(lpddsback->Unlock(NULL)))
 		return(0);
 
 	while (FAILED(lpddsprimary->Flip(NULL, DDFLIP_WAIT)));
-
-	//Sleep(33);
 
 	DrawFillColor(lpddsback);
 	
@@ -245,7 +234,6 @@ int GameMain()
 
 int GameClose()
 {
-
 	if (lpddsprimary)
 	{
 		lpddsprimary->Release();

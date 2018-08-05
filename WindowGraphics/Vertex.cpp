@@ -72,6 +72,4 @@ void VertexOutCopy(VertexOut * src, VertexOut * dest)
 	dest->worldNormal = src->worldNormal;
 	dest->uv = src->uv;
 }
-
-
 #pragma endregion

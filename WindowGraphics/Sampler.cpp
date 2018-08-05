@@ -7,8 +7,7 @@ using namespace Math;
 Sampler::Sampler(int samplerWidth, int samplerHeight)
 	:
 	width(samplerWidth),
-	height(samplerHeight)/*,
-	imageData(bmpFile.data)*/
+	height(samplerHeight)
 {
 	imageData = new unsigned char[width * height * 3];
 	memset(imageData, 0, width * height * 3 * sizeof(unsigned char));
@@ -31,10 +30,9 @@ Sampler::~Sampler()
 
 Vec4 Sampler::sample(float s, float t)
 {
-	if (s < 0.0f || s > 1.0f || t < 0.0f || t > 1.0f)
-		return Vec4(0, 0, 255, 255);
+	//if (s < 0.0f || s > 1.0f || t < 0.0f || t > 1.0f)
+	//	return Vec4(0, 0, 255, 255);
 	int allLength = width * height * 3;
-
 
 	Vec4 color(1.0f, 1.0f, 1.0f, 1.0f);
 	float u = (float)(this->width - 1) * s;
@@ -56,11 +54,6 @@ Vec4 Sampler::sample(float s, float t)
 
 	unsigned int imageIndex = (iv * width + iu) * 3;
 
-	if (imageIndex >= allLength)
-	{
-		imageIndex = allLength - 3;
-	}
-
 	color.x = (float)imageData[imageIndex + 0];
 	color.y = (float)imageData[imageIndex + 1];
 	color.z = (float)imageData[imageIndex + 2];
@@ -71,29 +64,14 @@ Vec4 Sampler::sample(float s, float t)
 
 	Vec4 colorNextU(1.0f, 1.0f, 1.0f, 1.0f), colorNextV(1.0f, 1.0f, 1.0f, 1.0f), colorNextUV(1.0f, 1.0f, 1.0f, 1.0f);
 
-	//if (imageIndexNextU >= allLength)
-	//{
-	//	imageIndexNextU = allLength - 3;
-	//}
-
 	colorNextU.x  = (float)imageData[imageIndexNextU];
 	colorNextU.y  = (float)imageData[imageIndexNextU];
 	colorNextU.z  = (float)imageData[imageIndexNextU];
-
-	//if (imageIndexNextV >= allLength)
-	//{
-	//	imageIndexNextV = allLength - 3;
-	//}
-				  									
+		  									
 	colorNextV.x = (float)imageData[imageIndexNextV];
 	colorNextV.y = (float)imageData[imageIndexNextV];
 	colorNextV.z = (float)imageData[imageIndexNextV];
-
-	//if (imageIndexNextUV >= allLength)
-	//{
-	//	imageIndexNextUV = allLength - 3;
-	//}
-													 
+											 
 	colorNextUV.x = (float)imageData[imageIndexNextUV];
 	colorNextUV.y = (float)imageData[imageIndexNextUV];
 	colorNextUV.z = (float)imageData[imageIndexNextUV];

@@ -13,104 +13,125 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\Device">
+      <UniqueIdentifier>{efe930b8-178d-48a0-a286-498b84bd1988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Math">
+      <UniqueIdentifier>{146aaf17-f648-46f1-bd36-5996d360b5b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Objects">
+      <UniqueIdentifier>{c3e24eb3-e2fa-41ac-9d56-5320aec8f545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Texture">
+      <UniqueIdentifier>{fd0ae12e-ec44-4477-91f2-268768317244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Graphics">
+      <UniqueIdentifier>{d5be813a-4883-4169-8fda-a5928f6f5879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Camera">
+      <UniqueIdentifier>{aed97981-234c-4ab2-9cde-8841c1337346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Datatype">
+      <UniqueIdentifier>{568c6927-0945-4a49-8987-a6a0103a65b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DepthBuffer.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="MathUtil.cpp">
+      <Filter>源文件\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>源文件\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>源文件\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>源文件\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="BMPFile.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Texture</Filter>
     </ClCompile>
     <ClCompile Include="BMPTexture.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Sampler.cpp">
+      <Filter>源文件\Texture</Filter>
     </ClCompile>
     <ClCompile Include="graphics.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsMod.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>源文件\Datatype</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MathUtil.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Sampler.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Triangle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Vertex.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DepthBuffer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Device.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BMPFile.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BMPTexture.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsMod.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MathUtil.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Sampler.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="DepthBuffer.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Device</Filter>
     </ClInclude>
     <ClInclude Include="Device.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Device</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtil.h">
+      <Filter>源文件\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>源文件\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>源文件\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>源文件\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BMPFile.h">
+      <Filter>源文件\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="BMPTexture.h">
+      <Filter>源文件\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>源文件\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>源文件\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsMod.h">
+      <Filter>源文件\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>源文件\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>源文件\Datatype</Filter>
     </ClInclude>
     <ClInclude Include="DataType.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Datatype</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="test_bmp.bmp">
-      <Filter>源文件</Filter>
+      <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
 </Project>

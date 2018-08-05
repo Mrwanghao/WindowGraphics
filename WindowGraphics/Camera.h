@@ -17,9 +17,7 @@ public:
 	Math::Vec3 cameraDirection;
 	Math::Vec3 worldPosition;
 
-	float nearZ;
 private:
-	float farZ;
 
 	//╫г╤х
 	float fovx;
@@ -32,6 +30,9 @@ private:
 
 	float viewplaneDistance;
 
+public:
+	float nearZ;
+	float farZ;
 	//фад╩©М╦ъ╠х
 	float aspectRatio;
 

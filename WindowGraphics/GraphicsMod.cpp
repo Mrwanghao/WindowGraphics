@@ -1211,7 +1211,6 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 		return;
 	}
 
-
 	if ((int)tri.ndcB.y == (int)tri.ndcC.y)
 	{
 		DrawTextureBottomTriangle(tri, videoBuffer, lPitch);
@@ -1227,7 +1226,6 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 
 		float param = (float)(tri.ndcB.y - tri.ndcA.y) / (tri.ndcC.y - tri.ndcA.y);
 		tempNDC = clamp(tri.ndcA, tri.ndcC, param);
-		//param = (float)(tri.vertexoutB.viewPosition.y - tri.vertexoutA.viewPosition.y) / (tri.vertexoutC.viewPosition.y - tri.vertexoutA.viewPosition.y);
 		tempVertexOut = clamp(tri.vertexoutA, tri.vertexoutC, param);
 
 		Triangle tempTri;
@@ -1246,7 +1244,6 @@ void DrawTextureTriangle(Triangle & tri, unsigned int * videoBuffer, int lPitch)
 		tempTri.ndcC = tri.ndcC;
 		tempTri.vertexoutC = tri.vertexoutC;
 		DrawTextureTopTriangle(tempTri, videoBuffer, lPitch);
-		
 	}
 }
 

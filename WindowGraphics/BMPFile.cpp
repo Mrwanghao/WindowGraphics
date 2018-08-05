@@ -51,7 +51,7 @@ bool BMPFile::loadBMP(const char * fileName)
 	fread(data, 1, bmpSize, bmpFILE);
 	fclose(bmpFILE);
 
-	for (int i = 0; i < (int)bmpSize; i+=3)
+	for (unsigned int i = 0; i < (unsigned int)bmpSize; i+=3)
 	{
 		swapColor(&data[i], &data[i+2]);
 	}

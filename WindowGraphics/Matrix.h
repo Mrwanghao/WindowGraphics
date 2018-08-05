@@ -14,7 +14,7 @@ namespace Math
 	public:
 		union
 		{
-			float _data[4];
+			float data[4];
 			struct
 			{
 				float _m00, _m01;
@@ -40,7 +40,7 @@ namespace Math
 	public:
 		union
 		{
-			float _data[9];
+			float data[9];
 			struct
 			{
 				float _m00, _m01, _m02;
@@ -59,7 +59,7 @@ namespace Math
 	public:
 		union
 		{
-			float _data[16];
+			float data[16];
 			struct
 			{
 				float _m00, _m01, _m02, _m03;
@@ -78,7 +78,7 @@ namespace Math
 		inline void LoadZero() 
 		{ 
 			for (int i = 0; i < 16; i++)
-				_data[i] = 0.0f;
+				data[i] = 0.0f;
 		}
 
 	public:

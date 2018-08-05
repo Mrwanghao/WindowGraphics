@@ -33,10 +33,6 @@ void Device::SetPixel(int row, int col, float invDepth, Color color)
 	{
 		frame->SetPixel(row, col, color);
 	}
-	else
-	{
-		//被遮挡了
-	}
 }
 
 //用于提交像素图

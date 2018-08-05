@@ -5,7 +5,7 @@
 
 class VertexOut;
 
-inline float DegToRad(float deg) { return deg / 180 * 3.1415926; }
+inline float DegToRad(float deg) { return deg / 180.0f * 3.14159265359f; }
 
 VertexOut clamp(VertexOut& left, VertexOut& right, float t);
 Math::Vec4 clamp(Math::Vec4 min, Math::Vec4 max, float t);

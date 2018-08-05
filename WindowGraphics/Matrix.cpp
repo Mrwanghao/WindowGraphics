@@ -7,7 +7,7 @@ namespace Math
 	Matrix2::Matrix2()
 	{
 		for (int i = 0; i < 4; i++)
-			_data[i] = 0.0f;
+			data[i] = 0.0f;
 	}
 
 	Matrix2::Matrix2(float _m00, float _m01, float _m10, float _m11)
@@ -25,9 +25,9 @@ namespace Math
 		{
 			for (int j = 0; j < i; j++)
 			{
-				temp = _data[j * 2 + i];
-				_data[j * 2 + i] = _data[i * 2 + j];
-				_data[i * 2 + j] = temp;
+				temp = data[j * 2 + i];
+				data[j * 2 + i] = data[i * 2 + j];
+				data[i * 2 + j] = temp;
 			}
 		}
 	}
@@ -40,16 +40,16 @@ namespace Math
 	Matrix2 Matrix2::operator*(const Matrix2 & right)
 	{
 		Matrix2 result;
-		float temp = 0;
 		for (int i = 0; i < 2; i++)
 		{
 			for (int j = 0; j < 2; j++)
 			{
+				float temp = 0.0f;
 				for (int index = 0; index < 2; index++)
 				{
-					temp += this->_data[i * 2 + index] * right._data[index * 2 + j];
+					temp += this->data[i * 2 + index] * right.data[index * 2 + j];
 				}
-				result._data[i * 2 + j] = temp;
+				result.data[i * 2 + j] = temp;
 			}
 		}
 		return result;
@@ -63,7 +63,7 @@ namespace Math
 	Matrix3::Matrix3()
 	{
 		for (int index = 0; index < 9; index++)
-			this->_data[index] = 0.0f;
+			this->data[index] = 0.0f;
 	}
 
 	Matrix3::Matrix3(float _m00, float _m01, float _m02, float _m10, float _m11, float _m12, float _m20, float _m21, float _m22)
@@ -83,7 +83,7 @@ namespace Math
 	Matrix4::Matrix4()
 	{
 		for (int index = 0; index < 16; index++)
-			this->_data[index] = 0.0f;
+			this->data[index] = 0.0f;
 	}
 
 	Matrix4::Matrix4(float _m00, float _m01, float _m02, float _m03, float _m10, float _m11, float _m12, float _m13, float _m20, float _m21, float _m22, float _m23, float _m30, float _m31, float _m32, float _m33)
@@ -113,11 +113,10 @@ namespace Math
 			for (int j = 0; j < 4; j++)
 			{
 				if (i == j)
-					this->_data[i * 4 + j] = 1.0f;
+					this->data[i * 4 + j] = 1.0f;
 				else
-					this->_data[i * 4 + j] = 0.0f;
+					this->data[i * 4 + j] = 0.0f;
 			}
-		
 		}
 	}
 
@@ -171,13 +170,13 @@ namespace Math
 
 		this->_m00 = cosValue;
 		this->_m01 = 0.0f;
-		this->_m02 = sinValue;
+		this->_m02 = -sinValue;
 		this->_m03 = 0.0f;
 		this->_m10 = 0.0f;
 		this->_m11 = 1.0f;
 		this->_m12 = 0.0f;
 		this->_m13 = 0.0f;
-		this->_m20 = -sinValue;
+		this->_m20 = sinValue;
 		this->_m21 = 0.0f;
 		this->_m22 = cosValue;
 		this->_m23 = 0.0f;
@@ -213,18 +212,16 @@ namespace Math
 	Matrix4 Matrix4::operator*(const Matrix4 & right) const
 	{
 		Matrix4 result;
-		float temp = 0.0f;
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				temp = 0.0f;
+				float temp = 0.0f;
 				for (int index = 0; index < 4; index++) 
 				{
-					temp += this->_data[i * 4 + index] * right._data[index * 4 + j];
+					temp += this->data[i * 4 + index] * right.data[index * 4 + j];
 				}
-					
-				result._data[i * 4 + j] = temp;
+				result.data[i * 4 + j] = temp;
 			}
 		}
 		return result;
