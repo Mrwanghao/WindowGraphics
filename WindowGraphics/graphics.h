@@ -16,5 +16,5 @@ void FixTriangle(const Triangle& tri, int clipFlag);
 int  CheckTriangle(const Triangle& tri);
 void VertShader(Vertex& input, VertexOut& output);
 
-void Rasterize();
-
+void ClampZEROONE(Vec2& uv);
+void Draw(Triangle& tri);

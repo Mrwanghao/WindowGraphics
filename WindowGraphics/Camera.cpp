@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include "MathUtil.h"
 
-using namespace Math;
+
 
 extern Matrix4 viewMatrix;
 
@@ -9,7 +9,7 @@ Camera::Camera()
 {
 }
 
-Camera::Camera(Math::Vec3 cameraDirection, Math::Vec3 worldPosition, float nearZ, float farZ, float fovx, float viewportWidth, float viewportHeight)
+Camera::Camera(Vec3 cameraDirection, Vec3 worldPosition, float nearZ, float farZ, float fovx, float viewportWidth, float viewportHeight)
 	:
 	cameraDirection(cameraDirection),
 	worldPosition(worldPosition),
@@ -37,8 +37,17 @@ void Camera::CalWorldToCameraMatrix()
 	viewMatrix = GetViewMatrix(worldPosition, cameraDirection);
 }
 
-Math::Vec3 Camera::GetCameraForward()
+Vec3 Camera::GetCameraForward()
 {
 	return GetForward(cameraDirection.y);
+}
+
+Matrix4 Camera::GetProjectionMatrix()
+{
+	Matrix4 result;
+	
+
+
+	return Matrix4();
 }
 

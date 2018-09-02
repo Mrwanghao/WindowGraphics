@@ -4,12 +4,12 @@
 
 struct Vertex
 {
-	Math::Vec3 localPosition;
-	Math::Vec3 localNormal;
-	Math::Vec2 uv;
+	Vec3 localPosition;
+	Vec3 localNormal;
+	Vec2 uv;
 
 	Vertex();
-	Vertex(Math::Vec3 _localPosition, Math::Vec3 _localNormal, Math::Vec2 _uv);
+	Vertex(Vec3 _localPosition, Vec3 _localNormal, Vec2 _uv);
 	~Vertex();
 };
 
@@ -18,14 +18,14 @@ void VertexCopy(Vertex* src, Vertex* dest);
 
 struct VertexOut
 {
-	Math::Vec4 worldPosition;
-	Math::Vec4 viewPosition;
-	Math::Vec4 clipPosition;
-	Math::Vec3 worldNormal;
-	Math::Vec2 uv;
-
+	Vec4 worldPosition;
+	Vec4 viewPosition;
+	Vec4 clipPosition;
+	Vec3 worldNormal;
+	Vec2 uv;
+	float onePerZ;
 	VertexOut();
-	VertexOut(Math::Vec4 _clipPosition, Math::Vec4 _viewPosition, Math::Vec4 _worldPosition, Math::Vec3 _worldNormal, Math::Vec2 _uv);
+	VertexOut(Vec4 _clipPosition, Vec4 _viewPosition, Vec4 _worldPosition, Vec3 _worldNormal, Vec2 _uv, float _onePerZ);
 
 	VertexOut& operator=(const VertexOut& right);
 	VertexOut operator-(const VertexOut& right);

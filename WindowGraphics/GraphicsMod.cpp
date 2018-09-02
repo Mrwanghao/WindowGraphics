@@ -7,7 +7,6 @@
 #include "BMPTexture.h"
 
 
-using namespace Math;
 
 extern Matrix4 modelMatrix;
 
@@ -1251,6 +1250,7 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 {
 	Vec2 middleNDC;
 	VertexOut tempVertexOut;
+	float tempOnePerZ = 0.0f;
 
 	if (tri.ndcA.x > tri.ndcB.x)
 	{
@@ -1280,6 +1280,11 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 	Vec2 duv_left = (tri.vertexoutC.uv - tri.vertexoutA.uv) / height;
 	Vec2 duv_right = (tri.vertexoutC.uv - tri.vertexoutB.uv) / height;
 
+	float leftOnePerZ = tri.vertexoutA.onePerZ;
+	float rightOnePerZ = tri.vertexoutB.onePerZ;
+	float dLeftOnePerZ = (tri.vertexoutC.onePerZ - tri.vertexoutA.onePerZ) / height;
+	float dRightOnePerZ = (tri.vertexoutC.onePerZ - tri.vertexoutB.onePerZ) / height;
+
 	if (tri.ndcA.y < MIN_CLIP_Y)
 	{
 		xs = (MIN_CLIP_Y - tri.ndcA.y) * dx_left + xs;
@@ -1287,6 +1292,9 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 
 		tempLeftUV += (MIN_CLIP_Y - tri.ndcA.y) * duv_left;
 		tempRightUV += (MIN_CLIP_Y - tri.ndcA.y) * duv_right;
+
+		leftOnePerZ += (MIN_CLIP_Y - tri.ndcA.y) * dLeftOnePerZ;
+		rightOnePerZ += (MIN_CLIP_Y - tri.ndcA.y) * dRightOnePerZ;
 
 		tri.ndcA.y = MIN_CLIP_Y;
 	}
@@ -1301,6 +1309,7 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 	Vec2 tempUV;
 	Vec4 tempColor;
 	Vec2 uv_step;
+	float dz;
 
 	int tempY;
 
@@ -1311,16 +1320,27 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 		for (tempY = tri.ndcA.y; tempY < tri.ndcC.y; tempY++, videoBuffer += lPitch)
 		{
 			tempUV = tempLeftUV;
+			tempOnePerZ = leftOnePerZ;
 
+			
+#if 1
 			float inv = 1.0f / (xe - xs + 1);
 			uv_step = (tempRightUV - tempLeftUV) * inv;
+			dz = (rightOnePerZ - leftOnePerZ) * inv;
 
+#else
+			float inv = 1.0f / (xe - xs);
+			uv_step = (tempRightUV - tempLeftUV) * inv;
+			dz = (rightOnePerZ - leftOnePerZ) * inv;
+#endif
 			for (int index = 0; index < xe - xs + 1; index++)
 			{
-				tempColor = bmpTexture.sampler->sample(tempUV.x, tempUV.y);
+				Vec2 uv = tempUV / tempOnePerZ;
+				tempColor = bmpTexture.sampler->sample(uv.x, uv.y);
 				*(videoBuffer + (int)xs + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
 
 				tempUV += uv_step;
+				tempOnePerZ += dz;
 			}
 
 			xs += dx_left;
@@ -1328,6 +1348,10 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 
 			tempLeftUV += duv_left;
 			tempRightUV += duv_right;
+
+			leftOnePerZ += dLeftOnePerZ;
+			rightOnePerZ += dRightOnePerZ;
+
 		}
 	}
 	else
@@ -1336,16 +1360,33 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 		{
 			left = (int)xs;
 			right = (int)xe;
+			tempOnePerZ = leftOnePerZ;
+
+			
 
 			tempUV = tempLeftUV;
 			uv_step = (tempRightUV - tempLeftUV) / (right - left + 1);
+			dz = (rightOnePerZ - leftOnePerZ) / (right - left + 1);
+
+
+			
 
 			if (left < MIN_CLIP_X)
 			{
 				tempUV += (MIN_CLIP_X - left) * uv_step;
+				tempOnePerZ += (MIN_CLIP_X - left) * dz;
 				left = MIN_CLIP_X;
 				if (right < MIN_CLIP_X)
 				{
+
+					xs += dx_left;
+					xe += dx_right;
+
+					tempLeftUV += duv_left;
+					tempRightUV += duv_right;
+
+					leftOnePerZ += dLeftOnePerZ;
+					rightOnePerZ += dRightOnePerZ;
 					continue;
 				}
 			}
@@ -1355,26 +1396,39 @@ void DrawTextureTopTriangle(Triangle & tri, unsigned int * videoBuffer, int lPit
 				right = MAX_CLIP_X;
 				if (left > MAX_CLIP_X)
 				{
+
+					xs += dx_left;
+					xe += dx_right;
+
+					tempLeftUV += duv_left;
+					tempRightUV += duv_right;
+
+					leftOnePerZ += dLeftOnePerZ;
+					rightOnePerZ += dRightOnePerZ;
 					continue;
 				}
 			}
 
 			for (int index = 0; index < right - left + 1; index++)
 			{
-
-				tempColor = bmpTexture.sampler->sample(tempUV.x, tempUV.y);
+				Vec2 uv = tempUV / tempOnePerZ;
+				tempColor = bmpTexture.sampler->sample(uv.x, uv.y);
 
 				*(videoBuffer + left + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
 				
 				tempUV += uv_step;
+				tempOnePerZ += dz;
 				
 			}
-
+			
 			xs += dx_left;
 			xe += dx_right;
 
 			tempLeftUV += duv_left;
 			tempRightUV += duv_right;
+
+			leftOnePerZ += dLeftOnePerZ;
+			rightOnePerZ += dRightOnePerZ;
 		}
 	}
 }
@@ -1383,6 +1437,7 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 {
 	Vec2 middleNDC;
 	VertexOut tempVertexOut;
+	float tempOnePerZ = 0.0f;
 
 	if (tri.ndcB.x > tri.ndcC.x)
 	{
@@ -1399,19 +1454,21 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 	float height = tri.ndcC.y - tri.ndcA.y;
 
 	int left, right;
-	float dx_left, dx_right;
-
-	dx_left = (float)(tri.ndcB.x - tri.ndcA.x) / height;
-	dx_right = (float)(tri.ndcC.x - tri.ndcA.x) / height;
+	float dx_left = (float)(tri.ndcB.x - tri.ndcA.x) / height;
+	float dx_right = (float)(tri.ndcC.x - tri.ndcA.x) / height;
 
 	float xs = (float)tri.ndcA.x;
 	float xe = (float)tri.ndcA.x;
 
 	Vec2 tempLeftUV = tri.vertexoutA.uv;
 	Vec2 tempRightUV = tri.vertexoutA.uv;
-
 	Vec2 duv_left = (tri.vertexoutB.uv - tri.vertexoutA.uv) / height;
 	Vec2 duv_right = (tri.vertexoutC.uv - tri.vertexoutA.uv) / height;
+
+	float leftOnePerZ = tri.vertexoutA.onePerZ;
+	float rightOnePerZ = tri.vertexoutA.onePerZ;
+	float dLeftOnePerZ = (tri.vertexoutB.onePerZ - tri.vertexoutA.onePerZ) / height;
+	float dRightOnePerZ = (tri.vertexoutC.onePerZ - tri.vertexoutA.onePerZ) / height;
 	
 	if (tri.ndcA.y < MIN_CLIP_Y)
 	{
@@ -1420,6 +1477,9 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 
 		tempLeftUV += (MIN_CLIP_Y - tri.ndcA.y) * duv_left;
 		tempRightUV += (MIN_CLIP_Y - tri.ndcA.y) * duv_right;
+
+		leftOnePerZ += (MIN_CLIP_Y - tri.ndcA.y) * dLeftOnePerZ;
+		rightOnePerZ += (MIN_CLIP_Y - tri.ndcA.y) * dRightOnePerZ;
 
 		tri.ndcA.y = MIN_CLIP_Y;
 	}
@@ -1434,6 +1494,7 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 	Vec2 tempUV;
 	Vec4 tempColor;
 	Vec2 uv_step;
+	float dz;
 
 	int tempY;
 	
@@ -1444,16 +1505,20 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 		for (tempY = tri.ndcA.y; tempY < tri.ndcC.y; tempY++, videoBuffer += lPitch)
 		{
 			tempUV = tempLeftUV;
+			tempOnePerZ = leftOnePerZ;
 
 			float inv = 1.0f / (xe - xs + 1);
 			uv_step = (tempRightUV - tempLeftUV) * inv;
+			dz = (rightOnePerZ - leftOnePerZ) * inv;
 
-			for (int index = 0; index < xe - xs + 1; index++)
+			for (int index = 0; index < (int)(xe - xs + 1); index++)
 			{
-				tempColor = bmpTexture.sampler->sample(tempUV.x, tempUV.y);
+				Vec2 uv = tempUV / tempOnePerZ;
+				tempColor = bmpTexture.sampler->sample(uv.x, uv.y);
 				*(videoBuffer + (int)xs + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
 
 				tempUV += uv_step;
+				tempOnePerZ += dz;
 			}
 
 			xs += dx_left;
@@ -1461,6 +1526,10 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 
 			tempLeftUV += duv_left;
 			tempRightUV += duv_right;
+
+			leftOnePerZ += dLeftOnePerZ;
+			rightOnePerZ += dRightOnePerZ;
+
 		}
 	}
 	else
@@ -1470,21 +1539,32 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 			left = (int)xs;
 			right = (int)xe;
 
-			xs += dx_left;
-			xe += dx_right;
-
-			tempLeftUV += duv_left;
-			tempRightUV += duv_right;
+			
 
 			tempUV = tempLeftUV;
 			uv_step = (tempRightUV - tempLeftUV) / (right - left + 1);
 
+			tempOnePerZ = leftOnePerZ;
+			dz = (rightOnePerZ - leftOnePerZ) / (right - left + 1);
+
+			
+
 			if (left < MIN_CLIP_X)
 			{
 				tempUV += (MIN_CLIP_X - left) * uv_step;
+				tempOnePerZ += (MIN_CLIP_X - left) * dz;
 				left = MIN_CLIP_X;
 				if (right < MIN_CLIP_X)
 				{
+					xs += dx_left;
+					xe += dx_right;
+
+					tempLeftUV += duv_left;
+					tempRightUV += duv_right;
+
+					leftOnePerZ += dLeftOnePerZ;
+					rightOnePerZ += dRightOnePerZ;
+
 					continue;
 				}
 			}
@@ -1494,17 +1574,39 @@ void DrawTextureBottomTriangle(Triangle & tri, unsigned int * videoBuffer, int l
 				right = MAX_CLIP_X;
 				if (left > MAX_CLIP_X)
 				{
+
+					xs += dx_left;
+					xe += dx_right;
+
+					tempLeftUV += duv_left;
+					tempRightUV += duv_right;
+
+					leftOnePerZ += dLeftOnePerZ;
+					rightOnePerZ += dRightOnePerZ;
+
 					continue;
 				}
 			}
 
 			for (int index = 0; index < right - left + 1; index++)
 			{
-				tempColor = bmpTexture.sampler->sample(tempUV.x, tempUV.y);
+				Vec2 uv = tempUV / tempOnePerZ;
+				tempColor = bmpTexture.sampler->sample(uv.x, uv.y);
 				*(videoBuffer + left + index) = RGB32BIT(0, (int)tempColor.x, (int)tempColor.y, (int)tempColor.z);
 
 				tempUV += uv_step;
+				tempOnePerZ += dz;
 			}
+
+			xs += dx_left;
+			xe += dx_right;
+
+			tempLeftUV += duv_left;
+			tempRightUV += duv_right;
+
+			leftOnePerZ += dLeftOnePerZ;
+			rightOnePerZ += dRightOnePerZ;
+
 		}
 	}
 }

@@ -6,19 +6,19 @@ class Camera
 {
 public:
 	Camera();
-	Camera(Math::Vec3 cameraDirection, Math::Vec3 worldPosition, float nearZ, float farZ, float fovx, float viewportWidth, float viewportHeight);
+	Camera(Vec3 cameraDirection, Vec3 worldPosition, float nearZ, float farZ, float fovx, float viewportWidth, float viewportHeight);
 	~Camera();
 
 public:
 	void CalWorldToCameraMatrix();
-	Math::Vec3 GetCameraForward();
+	Vec3 GetCameraForward();
+	Matrix4 GetProjectionMatrix();
 
 public:
-	Math::Vec3 cameraDirection;
-	Math::Vec3 worldPosition;
+	Vec3 cameraDirection;
+	Vec3 worldPosition;
 
-private:
-
+public:
 	//½Ç¶È
 	float fovx;
 
@@ -29,8 +29,6 @@ private:
 	float viewplaneHeight;
 
 	float viewplaneDistance;
-
-public:
 	float nearZ;
 	float farZ;
 	//ÆÁÄ»¿í¸ß±È

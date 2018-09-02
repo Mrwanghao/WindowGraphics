@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)WindowGraphics\Dependency\DirectX\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)WindowGraphics\Dependency\DirectX\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Dependency\glfw\include;$(SolutionDir)Dependency\DirectX\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependency\glfw\lib;$(SolutionDir)Dependency\DirectX\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)Dependency\DirectX\Include;$(IncludePath)</IncludePath>
@@ -86,7 +86,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ddraw.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ddraw.lib;dxguid.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -134,18 +134,22 @@
     <ClCompile Include="BMPFile.cpp" />
     <ClCompile Include="BMPTexture.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="content.txt" />
     <ClCompile Include="DepthBuffer.cpp" />
-    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="glad\glad.c" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="GraphicsMod.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathUtil.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Sampler.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BMPFile.h" />
@@ -153,16 +157,20 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DataType.h" />
     <ClInclude Include="DepthBuffer.h" />
-    <ClInclude Include="Device.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="FrameBuffer.h" />
+    <ClInclude Include="glad\glad.h" />
+    <ClInclude Include="glad\khrplatform.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="GraphicsMod.h" />
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Sampler.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="test_bmp.bmp" />

@@ -24,7 +24,7 @@ bool DepthBuffer::SetDepth(int row, int col, float invDepth)
 {
 	int jump = row * width + col;
 	float prevInvDepth = buffer[jump];
-	if (prevInvDepth >= invDepth)
+	if (invDepth <= prevInvDepth)
 	{
 		return false;
 	}

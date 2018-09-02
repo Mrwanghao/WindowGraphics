@@ -34,12 +34,12 @@
     <Filter Include="源文件\Datatype">
       <UniqueIdentifier>{568c6927-0945-4a49-8987-a6a0103a65b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\glad">
+      <UniqueIdentifier>{06da42ca-ab24-4251-85c8-8e7a674f2df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DepthBuffer.cpp">
-      <Filter>源文件\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Device.cpp">
       <Filter>源文件\Device</Filter>
     </ClCompile>
     <ClCompile Include="FrameBuffer.cpp">
@@ -81,12 +81,24 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="content.txt">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="glad\glad.c">
+      <Filter>源文件\glad</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件\Device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepthBuffer.h">
-      <Filter>源文件\Device</Filter>
-    </ClInclude>
-    <ClInclude Include="Device.h">
       <Filter>源文件\Device</Filter>
     </ClInclude>
     <ClInclude Include="FrameBuffer.h">
@@ -127,6 +139,21 @@
     </ClInclude>
     <ClInclude Include="DataType.h">
       <Filter>源文件\Datatype</Filter>
+    </ClInclude>
+    <ClInclude Include="glad\glad.h">
+      <Filter>源文件\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="glad\khrplatform.h">
+      <Filter>源文件\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>源文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>源文件\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>源文件\Device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

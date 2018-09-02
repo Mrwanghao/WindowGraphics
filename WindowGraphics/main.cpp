@@ -12,7 +12,7 @@
 #include "graphics.h"
 #include "Triangle.h"
 
-using namespace Math;
+
 
 HWND main_window_hwnd		   = nullptr;
 HINSTANCE main_window_instance = nullptr;
@@ -22,32 +22,34 @@ DDSURFACEDESC2 ddsd;
 LPDIRECTDRAWSURFACE7 lpddsprimary = NULL;
 LPDIRECTDRAWSURFACE7 lpddsback = NULL;
 
-extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
+extern Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
-Vertex a = Vertex(Vec3(-2.0f, -2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.0f));
-Vertex b = Vertex(Vec3(-2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
-Vertex c = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
-Vertex d = Vertex(Vec3( 2.0f, -2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
-Vertex e = Vertex(Vec3(-2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.0f));
-Vertex f = Vertex(Vec3(-2.0f,  2.0f,  6.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.0f, 0.9f));
-Vertex g = Vertex(Vec3( 2.0f,  2.0f,  6.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.9f));
-Vertex h = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Math::Vec2(0.9f, 0.0f));
+Vertex a = Vertex(Vec3(-2.0f, -2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f));
+Vertex b = Vertex(Vec3(-2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.9f));
+Vertex c = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.9f, 0.9f));
+Vertex d = Vertex(Vec3( 2.0f, -2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.9f, 0.0f));
+Vertex e = Vertex(Vec3(-2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f));
+Vertex f = Vertex(Vec3(-2.0f,  2.0f,  6.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.9f));
+Vertex g = Vertex(Vec3( 2.0f,  2.0f,  6.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.9f, 0.9f));
+Vertex h = Vertex(Vec3( 2.0f,  2.0f,  2.0f), Vec3(0.0f, 0.0f, 0.0f), Vec2(0.9f, 0.0f));
 
 
 #if 0
 Triangle triangle1(a, b, c);
 Triangle triangle2(a, c, d);
 #else
-Triangle triangle1(a, b, d);
-Triangle triangle2(b, c, d);
+Triangle triangle1(a, b, c);
+Triangle triangle2(a, c, d);
 
 #endif
 Triangle triangle3(e, f, g);
 Triangle triangle4(e, g, h);
-Camera mainCamera(Math::Vec3(0.0f, 0.0f, 0.0f), Math::Vec3(0.0f, 0.0f, -2.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
+Camera mainCamera(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, -4.0f), 1.0f, 500.0f, 90.0f, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-Math::Vec3 localPosition(0.0f, 0.0f, 0.0f);
-Math::Vec3 localEular(0.0f, 0.0f, 0.0f);
+Vec3 localPosition(0.0f, 0.0f, 0.0f);
+Vec3 localEular(0.0f, 70.0f, 0.0f);
+
+#if 1
 
 int GameInit();
 int GameMain();
@@ -209,7 +211,7 @@ int GameMain()
 	modelMatrix = GetModelMatrix(localPosition, localEular);
 	viewMatrix = GetViewMatrix(mainCamera.worldPosition, mainCamera.cameraDirection);
 	projectMatrix = GetPerspectiveMatrix(90.0f, mainCamera.aspectRatio, mainCamera.nearZ, mainCamera.farZ);
-	
+	//projectMatrix = GetPerspectiveMatrix(WINDOW_WIDTH, WINDOW_HEIGHT, mainCamera.nearZ, mainCamera.farZ, true);
 	if (FAILED(lpddsback->Lock(NULL, &ddsd,
 		DDLOCK_WAIT | DDLOCK_SURFACEMEMORYPTR,
 		NULL)))
@@ -250,3 +252,21 @@ int GameClose()
 }
 
 
+#else
+#include "Window.h"
+
+Window window("window graphics", 800, 600);
+
+int main()
+{
+	
+	while (!window.Closed())
+	{
+		window.Clear();
+		window.Swap();
+	}
+
+	return 0;
+}
+
+#endif

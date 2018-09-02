@@ -1,7 +1,7 @@
 #include "Triangle.h"
 #include "GraphicsMod.h"
 
-extern Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
+extern Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 Triangle::Triangle()
 {

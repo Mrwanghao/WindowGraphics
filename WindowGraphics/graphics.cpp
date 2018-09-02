@@ -6,12 +6,11 @@
 #include "Camera.h"
 #include <ddraw.h>
 
-using namespace Math;
 
 Triangle tri1;
 Triangle tri2;
 
-Math::Matrix4 modelMatrix, viewMatrix, projectMatrix;
+Matrix4 modelMatrix, viewMatrix, projectMatrix;
 
 extern Camera mainCamera;
 
@@ -92,9 +91,8 @@ void FixFail2Triangle(VertexOut fail1, VertexOut fail2, VertexOut succ)
 	allLength = (viewSucc - viewFail2).GetLength();
 	invLength = 1.0f / allLength;
 	partialLength *= invLength;
-
 	VertexOut inter2 = clamp(succ, fail2, partialLength);
-
+	
 	tri1.CopyVertexOut(inter1, inter2, succ);
 }
 
@@ -116,7 +114,7 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 	float invLength = 1.0f / allLength;
 	partialLength *= invLength;
 	VertexOut inter1 = clamp(fail, succ1, partialLength);
-
+	
 	zParam = CalculateZParam(viewFail.z, viewSucc2.z, z);
 	interParam = clamp(viewFail, viewSucc2, zParam);
 	partialLength = (viewFail - interParam).GetLength();
@@ -124,7 +122,7 @@ void FixFail1Triangle(VertexOut succ1, VertexOut succ2, VertexOut fail)
 	invLength = 1.0f / allLength;
 	partialLength *= invLength;
 	VertexOut inter2 = clamp(fail, succ2, partialLength);
-
+	
 	tri1.CopyVertexOut(succ1, succ2, inter1);
 	tri2.CopyVertexOut(inter1, succ2, inter2);
 }
@@ -240,11 +238,72 @@ void VertShader(Vertex& input, VertexOut& output)
 	//摄像机坐标变换到裁剪坐标
 	output.clipPosition = localPosition * mvp;
 
-	//法线变换到世界坐标系下
+	//法线变换到世界坐标系下(未做逆转置处理)
 	output.worldNormal = input.localNormal * modelMatrix;
 
+	//output.clipPosition = output.clipPosition / output.clipPosition.w;
+
+	output.onePerZ = 1.0f / output.clipPosition.w;
+
 	//赋值uv
-	output.uv = input.uv;
+	output.uv = input.uv / output.clipPosition.w;
+	
+	ClampZEROONE(output.uv);
+}
+
+void ClampZEROONE(Vec2& uv)
+{
+	float max = uv.x > uv.y ? uv.x : uv.y;
+	if (max > 1.0f)
+	{
+		uv = uv / max;
+	}
+
+}
+
+void Draw(Triangle & _tri)
+{
+	//现在计算出了所有顶点的vertexout
+	VertShader(_tri.vertexA, _tri.vertexoutA);
+	VertShader(_tri.vertexB, _tri.vertexoutB);
+	VertShader(_tri.vertexC, _tri.vertexoutC);
+
+	//首先进行正反面判断
+	//目前不需要
+
+	//那么现在可以进行裁剪
+	//首先进行标志为检测
+	int clipFlag = CheckTriangle(_tri);
+
+	if (clipFlag != 111)
+	{
+		//需要切割
+
+		if (clipFlag == 000)
+		{
+			//全部被切割了 所以不用渲染了
+			return;
+		}
+
+		//分解或者修改
+		FixTriangle(_tri, clipFlag);
+
+		//渲染第一个三角形
+		
+
+		//有可能需要渲染第二个三角形
+		if (clipFlag == 101 || clipFlag == 110 || clipFlag == 011)
+		{
+			//渲染第二个三角形
+			
+		}
+
+	}
+	else if (clipFlag == 111)
+	{
+		//不需切割
+		
+	}
 }
 
 #pragma endregion

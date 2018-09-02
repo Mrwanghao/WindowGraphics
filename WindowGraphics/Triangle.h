@@ -8,7 +8,7 @@ class Triangle
 public:
 	Vertex vertexA, vertexB, vertexC;
 	VertexOut vertexoutA, vertexoutB, vertexoutC;
-	Math::Vec2 ndcA, ndcB, ndcC;
+	Vec2 ndcA, ndcB, ndcC;
 
 public:
 	Triangle();

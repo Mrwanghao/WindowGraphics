@@ -2,4 +2,4 @@
 #include "Vector.h"
 
 
-typedef Math::Vec3 Color;
+typedef Vec3 Color;

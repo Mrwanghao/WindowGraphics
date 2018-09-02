@@ -3,27 +3,29 @@
 #include "Matrix.h"
 
 
+#define PI 3.14159265358979f
+
 class VertexOut;
 
-inline float DegToRad(float deg) { return deg / 180.0f * 3.14159265359f; }
+inline float DegToRad(float deg) { return deg / 180.0f * PI; }
 
 VertexOut clamp(VertexOut& left, VertexOut& right, float t);
-Math::Vec4 clamp(Math::Vec4 min, Math::Vec4 max, float t);
-Math::Vec3 clamp(Math::Vec3 min, Math::Vec3 max, float t);
-Math::Vec2 clamp(Math::Vec2 min, Math::Vec2 max, float t);
+Vec4 clamp(Vec4 min, Vec4 max, float t);
+Vec3 clamp(Vec3 min, Vec3 max, float t);
+Vec2 clamp(Vec2 min, Vec2 max, float t);
 float clamp(float min, float max, float t);
 
 
 
 
 
-Math::Matrix4 translateToMatrix(const Math::Vec3& worldPosition);
-Math::Matrix4 eularToMatrix(const Math::Vec3& eular);
-Math::Matrix4 GetMatrixByTranslateAndEular(Math::Vec3 worldPosition, Math::Vec3 eular);
+Matrix4 translateToMatrix(const Vec3& worldPosition);
+Matrix4 eularToMatrix(const Vec3& eular);
+Matrix4 GetMatrixByTranslateAndEular(Vec3 worldPosition, Vec3 eular);
 
-Math::Matrix4 GetModelMatrix(Math::Vec3 position, Math::Vec3 eular);
-Math::Matrix4 GetViewMatrix(Math::Vec3 position, Math::Vec3 eular);
-Math::Matrix4 GetPerspectiveMatrix(float fovx, float aspect, float zn, float zf);
+Matrix4 GetModelMatrix(Vec3 position, Vec3 eular);
+Matrix4 GetViewMatrix(Vec3 position, Vec3 eular);
+Matrix4 GetPerspectiveMatrix(float fovx, float aspect, float zn, float zf);
 
-Math::Vec3 Cross(const Math::Vec3& left, const Math::Vec3& right);
-Math::Vec3 GetForward(float yAngle);
+Vec3 Cross(const Vec3& left, const Vec3& right);
+Vec3 GetForward(float yAngle);
